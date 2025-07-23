@@ -1,0 +1,17 @@
+{
+  "name": "url-shortener-monorepo",
+  "private": true,
+  "workspaces": [
+    "api-shortener",
+    "short-your-url"
+  ],
+  "scripts": {
+    "dev": "npm run dev --workspace=short-your-url",
+    "dev:api": "npm run dev --workspace=api-shortener",
+    "build": "npm run build --workspaces",
+    "test": "npm test --workspaces"
+  },
+  "devDependencies": {
+    "typescript": "^5.0.0"
+  }
+}

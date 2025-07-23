@@ -1,0 +1,17 @@
+version: '3.9'
+services:
+  shortener:
+    image: postgres
+    ports:
+      - "5273:5432"
+    environment:
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=25Blacky25
+      - POSTGRES_DB=shortener
+    volumes:
+      - shortener_data:/var/lib/postgresql/data
+
+volumes:
+  shortener_data:
+
+

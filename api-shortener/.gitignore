@@ -1,0 +1,19 @@
+# Directories
+node_modules/
+dist/
+
+# Files
+.env
+*.local
+# src/tests/integration/fake-auth.ts
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
