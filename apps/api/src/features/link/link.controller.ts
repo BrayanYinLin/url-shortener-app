@@ -1,15 +1,15 @@
 import { Request, Response } from 'express'
 import { JsonWebTokenError } from 'jsonwebtoken'
-import { User } from '../types'
-import { ERROR_MESSAGES } from '../lib/definitions'
-import { checkLink, checkUpdateLink } from '../models/link.model'
+import { User } from '../../types'
+import { ERROR_MESSAGES } from '../../common/definitions'
+import { checkLink, checkUpdateLink } from './link.model'
 import {
   AvailabilityError,
   MissingParameterError,
   NotFoundError
-} from '../lib/errors'
-import { getRepository } from '../lib/utils'
-import { decryptToken } from '../lib/authentication'
+} from '../../common/errors'
+import { getRepository } from '../../common/utils'
+import { decryptToken } from '../auth/authentication'
 
 class LinkCtrl {
   database!: ReturnType<typeof getRepository>

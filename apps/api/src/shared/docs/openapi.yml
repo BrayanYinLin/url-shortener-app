@@ -1,0 +1,298 @@
+openapi: 3.0.3
+info:
+  title: URL Shortener API
+  description: |-
+    API REST para acortar y administrar enlaces.
+    Utiliza autenticación OAuth 2.0 con Google y GitHub, y gestiona los enlaces de los usuarios a través de endpoints protegidos por JWT.
+  version: 1.0.0
+servers:
+  - url: /api
+    description: Servidor Principal
+tags:
+  - name: Auth
+    description: Endpoints de Autenticación y sesión de usuario
+  - name: Links
+    description: Operaciones sobre los enlaces (crear, leer, actualizar, borrar)
+
+components:
+  schemas:
+    Link:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: ID único del enlace.
+          example: "a1b2c3d4-e5f6-7890-1234-567890abcdef"
+        created_at:
+          type: string
+          format: date-time
+          description: Fecha de creación del enlace.
+        long_url:
+          type: string
+          format: url
+          description: URL original y larga.
+          example: "https://github.com/BrayanYin/url-shortener-app"
+        short_url:
+          type: string
+          description: Código único que identifica al enlace corto.
+          example: "aB1cD2e"
+        description:
+          type: string
+          description: Descripción opcional del enlace.
+          example: "Repositorio del proyecto"
+        user_id:
+          type: string
+          format: uuid
+          description: ID del usuario propietario del enlace.
+        domain:
+          type: string
+          description: Dominio utilizado para acortar el enlace.
+          example: "short.link"
+    InsertLink:
+      type: object
+      required:
+        - long_url
+      properties:
+        long_url:
+          type: string
+          format: url
+          description: URL original que se desea acortar.
+        description:
+          type: string
+          description: Descripción opcional para el enlace.
+    EditLink:
+      type: object
+      properties:
+        long_url:
+          type: string
+          format: url
+          description: Nueva URL original.
+        description:
+          type: string
+          description: Nueva descripción para el enlace.
+    User:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        email:
+          type: string
+          format: email
+        avatar:
+          type: string
+          format: url
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: string
+          description: Mensaje descriptivo del error.
+          example: "Not Found"
+
+  securitySchemes:
+    cookieAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: "La autenticación se maneja a través de una cookie HttpOnly (`access_token`) que se establece después de un inicio de sesión exitoso. Aunque el esquema es 'bearer', el token se envía automáticamente por el navegador."
+
+security:
+  - cookieAuth: []
+
+paths:
+  /links:
+    get:
+      tags:
+        - Links
+      summary: Redirige a la URL larga
+      description: Busca un enlace por su `short_url` y redirige al `long_url` original.
+      parameters:
+        - name: short_url
+          in: query
+          required: true
+          description: El código corto del enlace a buscar.
+          schema:
+            type: string
+      responses:
+        '302':
+          description: Redirección exitosa a la URL larga.
+        '404':
+          description: No se encontró el enlace.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    post:
+      tags:
+        - Links
+      summary: Crea un nuevo enlace corto
+      description: Crea un nuevo enlace corto para el usuario autenticado.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/InsertLink'
+      responses:
+        '201':
+          description: Enlace creado exitosamente.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Link'
+        '400':
+          description: Datos de entrada inválidos.
+        '401':
+          description: No autorizado.
+
+  /links/user:
+    get:
+      tags:
+        - Links
+      summary: Obtiene todos los enlaces de un usuario
+      description: Devuelve una lista con todos los enlaces creados por el usuario autenticado.
+      responses:
+        '200':
+          description: Lista de enlaces del usuario.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Link'
+        '401':
+          description: No autorizado.
+
+  /links/{id}:
+    patch:
+      tags:
+        - Links
+      summary: Edita un enlace existente
+      description: Modifica la URL larga o la descripción de un enlace existente.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID del enlace a editar.
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EditLink'
+      responses:
+        '200':
+          description: Enlace actualizado exitosamente.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Link'
+        '401':
+          description: No autorizado.
+        '404':
+          description: Enlace no encontrado.
+    delete:
+      tags:
+        - Links
+      summary: Elimina un enlace
+      description: Elimina un enlace permanentemente por su ID.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID del enlace a eliminar.
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '240':
+          description: Enlace eliminado exitosamente.
+        '401':
+          description: No autorizado.
+        '404':
+          description: Enlace no encontrado.
+
+  /auth:
+    get:
+      tags:
+        - Auth
+      summary: Verifica la sesión del usuario
+      description: Devuelve los datos del usuario si la sesión (cookie) es válida.
+      responses:
+        '200':
+          description: Sesión válida.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '401':
+          description: No autorizado, la cookie no es válida o ha expirado.
+
+  /auth/refresh:
+    get:
+      tags:
+        - Auth
+      summary: Refresca el token de sesión
+      description: Utiliza el refresh token (no implementado en este ejemplo) para generar un nuevo access token.
+      responses:
+        '200':
+          description: Token refrescado.
+        '401':
+          description: No autorizado.
+
+  /auth/logout:
+    post:
+      tags:
+        - Auth
+      summary: Cierra la sesión del usuario
+      description: Invalida la sesión del usuario eliminando la cookie de autenticación.
+      responses:
+        '200':
+          description: Sesión cerrada exitosamente.
+
+  /auth/google:
+    get:
+      tags:
+        - Auth
+      summary: Inicia el flujo de autenticación con Google
+      description: Redirige al usuario a la página de consentimiento de Google.
+      responses:
+        '302':
+          description: Redirección a Google.
+
+  /auth/google/callback:
+    get:
+      tags:
+        - Auth
+      summary: Callback de Google
+      description: Google redirige aquí después de la autenticación. El servidor procesa el código, obtiene el token, y establece la cookie de sesión.
+      responses:
+        '302':
+          description: Redirección al cliente (ej. dashboard) con la sesión iniciada.
+
+  /auth/github:
+    get:
+      tags:
+        - Auth
+      summary: Inicia el flujo de autenticación con GitHub
+      description: Redirige al usuario a la página de autorización de GitHub.
+      responses:
+        '302':
+          description: Redirección a GitHub.
+
+  /auth/github/callback:
+    get:
+      tags:
+        - Auth
+      summary: Callback de GitHub
+      description: GitHub redirige aquí después de la autorización. El servidor procesa el código, obtiene el token, y establece la cookie de sesión.
+      responses:
+        '302':
+          description: Redirección al cliente (ej. dashboard) con la sesión iniciada.

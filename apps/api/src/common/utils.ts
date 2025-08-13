@@ -1,12 +1,7 @@
-import { Repository } from '../types'
-import { ENVIRONMENT } from './enviroment'
+import { env_node } from '@shared/config/enviroment'
 import { CookieOptions } from 'express'
-import { MILLISECONDS_TIMES } from './definitions'
-import { Local } from '../database/local'
-import { Supabase } from '../database/supabase'
-import { SupabaseClient } from '@supabase/supabase-js'
+import { MILLISECONDS_TIMES } from '../common/definitions'
 import { DateTime } from 'luxon'
-import { Pool } from 'pg'
 
 export const parseCookie = ({
   cookiesSet,
@@ -35,26 +30,26 @@ export const setCookiesSettings = (): CookieSettings => {
   const { FITHTEEN_DAYS_SECONDS, TWO_HOURS } = MILLISECONDS_TIMES
 
   const access_settings: CookieOptions = {
-    httpOnly: ENVIRONMENT === 'PRODUCTION',
+    httpOnly: env_node === 'PRODUCTION',
     maxAge: TWO_HOURS,
     domain:
-      ENVIRONMENT === 'PRODUCTION'
+      env_node === 'PRODUCTION'
         ? 'cool-shortener-production.up.railway.app'
         : 'localhost',
-    secure: ENVIRONMENT === 'PRODUCTION',
-    sameSite: ENVIRONMENT === 'PRODUCTION' ? 'none' : 'lax',
+    secure: env_node === 'PRODUCTION',
+    sameSite: env_node === 'PRODUCTION' ? 'none' : 'lax',
     path: '/'
   }
 
   const refresh_settings: CookieOptions = {
-    httpOnly: ENVIRONMENT === 'PRODUCTION',
+    httpOnly: env_node === 'PRODUCTION',
     maxAge: FITHTEEN_DAYS_SECONDS,
     domain:
-      ENVIRONMENT === 'PRODUCTION'
+      env_node === 'PRODUCTION'
         ? 'cool-shortener-production.up.railway.app'
         : 'localhost',
-    secure: ENVIRONMENT === 'PRODUCTION',
-    sameSite: ENVIRONMENT === 'PRODUCTION' ? 'none' : 'lax',
+    secure: env_node === 'PRODUCTION',
+    sameSite: env_node === 'PRODUCTION' ? 'none' : 'lax',
     path: '/'
   }
 
@@ -63,26 +58,18 @@ export const setCookiesSettings = (): CookieSettings => {
 
 export const getClearCookiesSettings = () => {
   const settings: CookieOptions = {
-    httpOnly: ENVIRONMENT === 'PRODUCTION',
-    secure: ENVIRONMENT === 'PRODUCTION',
+    httpOnly: env_node === 'PRODUCTION',
+    secure: env_node === 'PRODUCTION',
     // expires: new Date(0),
     domain:
-      ENVIRONMENT === 'PRODUCTION'
+      env_node === 'PRODUCTION'
         ? 'cool-shortener-production.up.railway.app'
         : 'localhost',
-    sameSite: ENVIRONMENT === 'PRODUCTION' ? 'none' : 'lax',
+    sameSite: env_node === 'PRODUCTION' ? 'none' : 'lax',
     path: '/'
   }
 
   return { settings }
-}
-
-export const getRepository = (): Repository<Pool | SupabaseClient> => {
-  if (ENVIRONMENT === 'PRODUCTION') {
-    return new Supabase()
-  }
-
-  return new Local()
 }
 
 export const getExpirationWithTimezone = (time: string) => {

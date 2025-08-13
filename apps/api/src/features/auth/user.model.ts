@@ -1,5 +1,5 @@
 import { z } from 'zod'
-import { User } from '../types'
+import { User } from '../../types'
 
 const provider = z.object({
   provider_id: z.number().int().optional(),

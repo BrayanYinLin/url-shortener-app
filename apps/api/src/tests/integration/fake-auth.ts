@@ -1,5 +1,5 @@
 import { encryptUser } from '../../lib/authentication'
-import { NotFoundError } from '../../lib/errors'
+import { NotFoundError } from '../../common/errors'
 import { getRepository } from '../../lib/utils'
 import { Cookies, User } from '../../types'
 

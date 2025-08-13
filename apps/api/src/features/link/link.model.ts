@@ -1,5 +1,5 @@
 import { z } from 'zod'
-import { Link } from '../types'
+import { Link } from '../../types'
 
 const link = z.object({
   id: z.string().uuid().nonempty().optional(),

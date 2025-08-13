@@ -1,49 +1,11 @@
-type Environment = 'dev' | 'pro'
-type Configs = {
-  environment: {
-    [key in Environment]: {
-      auth: string
-      link: string
-      origin: string
-    }
-  }
-}
-
-const configs: Configs = {
-  environment: {
-    dev: {
-      auth: 'http://localhost:5373/api/auth/',
-      link: 'http://localhost:5373/api/link/',
-      origin: 'http://localhost:5173/'
-    },
-    pro: {
-      auth: 'https://cool-shortener-production.up.railway.app/api/auth/',
-      link: 'https://cool-shortener-production.up.railway.app/api/link/',
-      origin: 'https://best-shorter.vercel.app/'
-    }
-  }
-}
-
-const setEnvironment = ({ env }: { env: Environment }) => {
-  const devOrigin = 'http://localhost:5173'
-  const { environment } = configs
-
-  if (window.location.origin === devOrigin) {
-    env = 'dev'
-  }
-
-  return {
-    AUTH: environment[env].auth,
-    LINK: environment[env].link,
-    ORIGIN: environment[env].origin
-  }
-}
-
-const { AUTH, LINK, ORIGIN } = setEnvironment({ env: 'pro' })
-
+// Al usar rutas relativas, dejamos que el proxy (en vite.config.ts o vercel.json)
+// se encargue de dirigir la petición al backend correcto, ya sea en desarrollo o producción.
+// Esto soluciona todos los problemas de cookies entre dominios.
 export const ENDPOINTS = {
-  AUTH: AUTH,
-  LINK: LINK
+  AUTH: '/api/auth/',
+  LINK: '/api/link/'
 }
 
-export const WEBSITE = ORIGIN
+// El origen del sitio web se puede determinar dinámicamente donde sea necesario,
+// pero ya no se requiere para las llamadas a la API.
+export const WEBSITE = '/'

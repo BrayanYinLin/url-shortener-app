@@ -1,15 +1,11 @@
 import cors from 'cors'
-import { DEPLOYED_CLIENT, LOCAL_CLIENT } from '../lib/enviroment'
+
+const BASE_URL = 'http://localhost:3000'
 
 const modifyOrigin = (origin: string) => origin + '/'
 
 export function corsOrigins() {
-  const originsAdmitted = [
-    DEPLOYED_CLIENT!,
-    modifyOrigin(DEPLOYED_CLIENT!),
-    LOCAL_CLIENT!,
-    modifyOrigin(LOCAL_CLIENT!)
-  ]
+  const originsAdmitted = [BASE_URL!, modifyOrigin(BASE_URL!)]
 
   return cors({
     origin: (origin, callback) => {
@@ -26,12 +22,7 @@ export function corsOrigins() {
 }
 
 export function preflight() {
-  const originsAdmitted = [
-    DEPLOYED_CLIENT!,
-    modifyOrigin(DEPLOYED_CLIENT!),
-    LOCAL_CLIENT!,
-    modifyOrigin(LOCAL_CLIENT!)
-  ]
+  const originsAdmitted = [BASE_URL!, modifyOrigin(BASE_URL!)]
 
   return cors({
     origin: function (origin, callback) {

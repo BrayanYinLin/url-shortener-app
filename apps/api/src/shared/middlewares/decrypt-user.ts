@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express'
-import { ERROR_MESSAGES } from '../lib/definitions'
+import { ERROR_MESSAGES } from '../common/definitions'
 import { User } from '../types'
-import { decryptToken } from '../lib/authentication'
+import { decryptToken } from '../features/auth/authentication'
 import * as jose from 'jose'
 
 export const decryptUser = () => {

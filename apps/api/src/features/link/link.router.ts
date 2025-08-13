@@ -1,7 +1,7 @@
 import { Router } from 'express'
-import { LinkCtrl } from '../controllers/link.controller'
-import { decryptUser } from '../middlewares/decrypt-user'
-import { getRepository } from '../lib/utils'
+import { LinkCtrl } from './link.controller'
+import { decryptUser } from '../../middlewares/decrypt-user'
+import { getRepository } from '../../common/utils'
 
 const database = getRepository()
 const routerLink = Router()

@@ -1,7 +1,7 @@
 import { Pool } from 'pg'
-import { POSTGRES_PASSWORD, POSTGRES_USER } from '../lib/enviroment'
-import { Link, Provider, User, Repository } from '../types'
-import { NotFoundError, OperationError } from '../lib/errors'
+import { POSTGRES_PASSWORD, POSTGRES_USER } from '../../config/enviroment'
+import { Link, Provider, User, Repository } from '../../types'
+import { NotFoundError, OperationError } from '../../common/errors'
 
 class Local implements Repository<Pool> {
   static instance: Local | null = null

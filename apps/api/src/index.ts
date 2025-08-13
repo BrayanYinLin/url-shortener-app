@@ -1,29 +1,12 @@
-import express from 'express'
-import { PORT } from './lib/enviroment'
-import { routerAuth as authRouter } from './routers/auth.router'
-import { routerLink as linkRouter } from './routers/link.router'
-import cookieParser from 'cookie-parser'
-import { corsOrigins, preflight } from './middlewares/cors-origins'
-import morgan from 'morgan'
+import 'reflect-metadata'
+import { app } from './server'
+import { env_port_app } from './shared/config/enviroment'
+import { AppDataSource } from './shared/database/data-source'
 
-const app = express()
-const port = Number(PORT) || 5373
+const port = Number(env_port_app) || 5373
 
-app.use(corsOrigins())
-app.use(morgan('dev'))
-app.options('*', preflight())
-app.use(express.json())
-app.use(cookieParser())
+app.listen(port, async () => {
+  await AppDataSource.initialize()
 
-app.use('/api/auth', authRouter)
-app.use('/api/link', linkRouter)
-app.disable('x-powered-by')
-
-const init = async () => {
-  app.listen(port)
-  console.log(`Running...`)
-}
-
-init()
-
-export { app }
+  console.log(`Server running on port ${port}`)
+})

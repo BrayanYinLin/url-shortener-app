@@ -1,10 +1,10 @@
-import { User } from '../types'
-import { PROVIDERS } from './definitions'
+import { User } from '../../types'
+import { PROVIDERS } from '../../common/definitions'
 import {
   ErrorGettingGithubUser,
   ErrorMissingEmail,
   TokenNotFound
-} from './errors'
+} from '../../common/errors'
 
 export const getGithubAccessToken = async ({
   params
