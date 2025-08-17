@@ -1,12 +1,10 @@
 {
   "name": "url-shortener-monorepo",
   "private": true,
-  "workspaces": [
-    "apps/*"
-  ],
+  "workspaces": ["apps/*"],
   "scripts": {
-    "dev:client": "pnpm --filer client run dev",
-    "dev:api": "pnpm --filer api run dev",
+    "dev:client": "pnpm --filter client run dev",
+    "dev:api": "pnpm --filter api run dev",
     "build": "pnpm run build",
     "test:api": "pnpm --filter api run test"
   },
