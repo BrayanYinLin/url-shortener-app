@@ -1,6 +1,5 @@
 import { z } from 'zod'
-import { provider, user } from './features/auth/user.model'
-import { link } from './features/link/link.model'
+import { provider, user } from './modules/auth/user.model'
 import { Profile } from 'passport'
 
 export interface AuthenticationTokens {
@@ -23,14 +22,6 @@ export type RefreshToken = {
 }
 
 type User = z.infer<typeof user>
-type UserJWT = Pick<User, 'id' | 'email' | 'name' | 'created_at'>
-
-type Provider = z.infer<typeof provider>
-type Link = z.infer<typeof link>
-
-export type EliminationType = {
-  deleted: boolean
-}
 
 export type Cookies = {
   access: string

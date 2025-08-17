@@ -1,4 +1,4 @@
-import { Strategy } from 'passport-google-oauth20'
+import { Strategy as GoogleStrategy } from 'passport-google-oauth20'
 import passport from 'passport'
 import {
   env_api_base,
@@ -18,26 +18,27 @@ const createOauthMiddleware = () => {
     })
   }
 
-  const callbackURL = `${env_api_base}/api/v1/user/auth/google/callback`
+  const callbackURL = `${env_api_base}/api/auth/google/callback`
   passport.use(
-    'google',
-    new Strategy(
+    new GoogleStrategy(
       {
         clientID: env_google_client,
         clientSecret: env_google_secret,
         callbackURL
       },
-      async (_at, _rt, profile, cb) => {
+      async (_at, _rt, profile, done) => {
         if (!profile.emails) {
-          throw new AppError({
-            code: ERROR_NAMES.AUTHENTICATION,
-            httpCode: ERROR_HTTP_CODES.AUTHENTICATION,
-            message: 'Email not found in Google profile',
-            isOperational: true
-          })
+          done(
+            new AppError({
+              code: ERROR_NAMES.AUTHENTICATION,
+              httpCode: ERROR_HTTP_CODES.AUTHENTICATION,
+              message: 'Email not found in Google profile',
+              isOperational: true
+            })
+          )
         }
 
-        cb(null, profile)
+        done(null, profile)
       }
     )
   )

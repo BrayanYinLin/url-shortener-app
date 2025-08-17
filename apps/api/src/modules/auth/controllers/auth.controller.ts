@@ -1,18 +1,20 @@
 import { NextFunction, Request, Response } from 'express'
-import { getClearCookiesSettings, setCookiesSettings } from '../../common/utils'
-import { AuthService } from './services/auth.service'
+import {
+  getClearCookiesSettings,
+  setCookiesSettings
+} from '../../../common/utils'
+import { AuthService } from '../services/auth.service'
 import { AppError } from '@shared/utils/error-factory'
 import { ERROR_HTTP_CODES, ERROR_NAMES } from '@shared/config/constants'
-import { setAuthCookies } from './lib/auth-cookies'
+import { setAuthCookies } from '../lib/auth-cookies'
 
 class AuthCtrl {
   constructor(private readonly service = new AuthService()) {}
 
-  // DONE
   async auth(req: Request, res: Response, next: NextFunction) {
     try {
       const access_token = req.cookies.access_token
-      const user = this.service.auth({ access_token })
+      const user = await this.service.auth({ access_token })
 
       return res.json(user)
     } catch (e) {
@@ -20,7 +22,6 @@ class AuthCtrl {
     }
   }
 
-  // DONE
   async refresh(req: Request, res: Response, next: NextFunction) {
     const refresh_token = req.cookies.refresh_token
     try {
@@ -37,7 +38,6 @@ class AuthCtrl {
     }
   }
 
-  // DONE
   async logout(_: Request, res: Response) {
     const { settings } = getClearCookiesSettings()
     return res
@@ -52,7 +52,7 @@ class AuthCtrl {
         throw new AppError({
           code: ERROR_NAMES.AUTHENTICATION,
           httpCode: ERROR_HTTP_CODES.AUTHENTICATION,
-          message: 'Email profile was not provided',
+          message: 'Email profile was not provided: ' + req.user,
           isOperational: true
         })
       }
@@ -63,7 +63,7 @@ class AuthCtrl {
 
       return setAuthCookies(res, access_token, refresh_token).redirect(
         301,
-        '/home'
+        'http://localhost:5173/dashboard'
       )
     } catch (e) {
       next(e)
@@ -86,7 +86,7 @@ class AuthCtrl {
 
       return setAuthCookies(res, access_token, refresh_token).redirect(
         301,
-        '/home'
+        'http://localhost:5173/dashboard'
       )
     } catch (e) {
       console.error(e)

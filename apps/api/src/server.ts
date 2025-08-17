@@ -1,9 +1,12 @@
 import express from 'express'
 import cookieParser from 'cookie-parser'
 import morgan from 'morgan'
-import { routerAuth } from './features/auth/auth.router'
-import { routerLink } from './features/link/link.router'
-import { corsOrigins, preflight } from '../middlewares/cors-origins'
+import { routerAuth } from './modules/auth/routers/auth.router'
+import { routerLink } from '@link/routers/link.router'
+import { corsOrigins, preflight } from '@shared/middlewares/cors-origins'
+import { handleError } from '@shared/utils/error-handler'
+import helmet from 'helmet'
+import passport from 'passport'
 
 const app = express()
 
@@ -11,14 +14,16 @@ app.use(corsOrigins())
 app.use(morgan('dev'))
 app.use(express.json())
 app.use(cookieParser())
-
-// 3. Rutas de la API
-app.use('/api/auth', routerAuth)
-app.use('/api/link', routerLink)
-
-// 4. Configuraciones adicionales
-app.disable('x-powered-by')
+app.use(passport.initialize())
+app.use(
+  helmet({
+    contentSecurityPolicy: false
+  })
+)
 app.options('*', preflight())
 
-// 5. Se exporta la app configurada
+app.use('/api/auth', routerAuth)
+app.use('/api/link', routerLink)
+app.use(handleError)
+
 export { app }

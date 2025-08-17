@@ -4,10 +4,11 @@ import { CreateUserDTO, createUserDTO } from '../entities/dtos/user.dto'
 import { Provider } from '../entities/provider.entity'
 import { User } from '../entities/user.entity'
 import { AccessToken, AuthenticationTokens, RefreshToken } from '../../../types'
-import { decryptToken, encryptUser } from '../authentication'
+import { decode, encode } from '../authentication'
 import { AppError } from '@shared/utils/error-factory'
 import { ERROR_NAMES, ERROR_HTTP_CODES } from '@shared/config/constants'
 import { Profile } from 'passport'
+import { PROVIDERS } from '@root/common/definitions'
 
 class AuthService {
   constructor(
@@ -16,7 +17,7 @@ class AuthService {
   ) {}
 
   async auth({ access_token }: AccessToken): Promise<User> {
-    const recovered = (await decryptToken(access_token)) as User
+    const recovered = (await decode(access_token)) as User
 
     const user = await this.userRepository.findOne({
       where: {
@@ -26,7 +27,12 @@ class AuthService {
     })
 
     if (!user) {
-      throw new NotFoundError('User not found')
+      throw new AppError({
+        code: ERROR_NAMES.NOT_FOUND,
+        httpCode: ERROR_HTTP_CODES.NOT_FOUND,
+        message: 'User not found',
+        isOperational: false
+      })
     }
 
     return user
@@ -35,20 +41,25 @@ class AuthService {
   async refresh({
     refresh_token
   }: RefreshToken): Promise<AccessToken & { user: User }> {
-    const recovered = (await decryptToken(refresh_token)) as User
+    const { sub } = await decode(refresh_token)
 
     const user = await this.userRepository.findOne({
       where: {
-        id: recovered.id
+        id: sub
       },
       relations: ['provider']
     })
 
     if (!user) {
-      throw new Error()
+      throw new AppError({
+        code: ERROR_NAMES.NOT_FOUND,
+        httpCode: ERROR_HTTP_CODES.NOT_FOUND,
+        message: 'User not found',
+        isOperational: false
+      })
     }
 
-    const { access } = encryptUser({ payload: user })
+    const { access } = encode({ payload: user })
 
     return { access_token: access, user }
   }
@@ -57,7 +68,12 @@ class AuthService {
     const { success, data } = createUserDTO.safeParse(userData)
 
     if (!success || !data) {
-      throw new Error('Invalid user data') // Consider a more specific validation error
+      throw new AppError({
+        code: ERROR_NAMES.VALIDATION,
+        httpCode: ERROR_HTTP_CODES.VALIDATION,
+        message: 'User schema is not valid',
+        isOperational: true
+      })
     }
 
     const { name, email, avatar, provider: providerData } = data
@@ -103,7 +119,7 @@ class AuthService {
 
     const githubProvider = await providerRepository.findOne({
       where: {
-        name: 'Github'
+        name: PROVIDERS.GITHUB
       }
     })
 
@@ -116,12 +132,15 @@ class AuthService {
       })
     }
 
+    const avatar = profile.photos ? profile.photos[0].value : ''
+
     let userRecord = existingUser
     if (!existingUser) {
       userRecord = await userRepository.save({
         name: profile.displayName,
         email: profile.emails[0].value,
-        provider: githubProvider
+        provider: githubProvider,
+        avatar: avatar
       })
     }
 
@@ -134,7 +153,7 @@ class AuthService {
       })
     }
 
-    const { access, refresh } = encryptUser({ payload: userRecord })
+    const { access, refresh } = encode({ payload: userRecord })
 
     return {
       access_token: access,
@@ -196,7 +215,7 @@ class AuthService {
       })
     }
 
-    const { access, refresh } = encryptUser({ payload: userRecord })
+    const { access, refresh } = encode({ payload: userRecord })
 
     return {
       access_token: access,

@@ -1,8 +1,12 @@
-import 'dotenv/config'
+import { join } from 'node:path'
 
+const PATH_ENV = join(__dirname, '../../../../../.env')
+process.loadEnvFile(PATH_ENV)
+
+// export const env_website = join(__dirname, '../../../../client/dist')
 const {
   PORT: env_port_app,
-  API_BASE: env_api_base = 'http://localhost:3000',
+  API_BASE: env_api_base = 'http://localhost:5373',
   GITHUB_CLIENT: env_github_client,
   GITHUB_SECRET: env_github_secret,
   GOOGLE_CLIENT: env_google_client,
@@ -16,7 +20,7 @@ const {
   ENVIRONMENT: env_node = 'DEVELOPMENT'
 } = process.env
 
-const env_pg_port = 5432
+const env_pg_port = 5273
 
 export {
   env_port_app,

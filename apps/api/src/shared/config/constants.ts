@@ -20,6 +20,11 @@ const ERROR_HTTP_CODES = {
   TIMEOUT: 408
 } as const
 
+const TOKEN_PARAMS = {
+  AT_DURATION: 60 * 60, //  Una hora
+  RT_DURATION: 60 * 60 * 24 * 15 //  15 Dias
+} as const
+
 const RATE_LIMITER = {
   WINDOW_TIME: 15 * 60 * 1000, // 15 minutes
   REQUEST_LIMIT: 100 // Limit each IP to 100 requests per `window` (here, per 15 minutes)
@@ -28,4 +33,11 @@ const RATE_LIMITER = {
 type Code = (typeof ERROR_NAMES)[keyof typeof ERROR_NAMES]
 type HttpCode = (typeof ERROR_HTTP_CODES)[keyof typeof ERROR_HTTP_CODES]
 
-export { RATE_LIMITER, ERROR_NAMES, ERROR_HTTP_CODES, Code, HttpCode }
+export {
+  RATE_LIMITER,
+  ERROR_NAMES,
+  ERROR_HTTP_CODES,
+  TOKEN_PARAMS,
+  Code,
+  HttpCode
+}
