@@ -1,7 +1,9 @@
 {
   "name": "url-shortener-monorepo",
   "private": true,
-  "workspaces": ["apps/*"],
+  "workspaces": [
+    "apps/*"
+  ],
   "scripts": {
     "dev:client": "pnpm --filter client run dev",
     "dev:api": "pnpm --filter api run dev",
@@ -9,6 +11,11 @@
     "test:api": "pnpm --filter api run test"
   },
   "devDependencies": {
+    "@types/swagger-ui-express": "^4.1.8",
     "typescript": "^5.0.0"
+  },
+  "dependencies": {
+    "swagger-ui-express": "5.0.1",
+    "yaml": "2.8.1"
   }
 }

@@ -7,6 +7,8 @@ import { corsOrigins, preflight } from '@shared/middlewares/cors-origins'
 import { handleError } from '@shared/utils/error-handler'
 import helmet from 'helmet'
 import passport from 'passport'
+import { swaggerDocs } from '@shared/docs/parse-docs'
+import swaggerUI from 'swagger-ui-express'
 
 const app = express()
 
@@ -22,6 +24,7 @@ app.use(
 )
 app.options('*', preflight())
 
+app.use('/api/docs', swaggerUI.serve, swaggerUI.setup(swaggerDocs))
 app.use('/api/auth', routerAuth)
 app.use('/api/link', routerLink)
 app.use(handleError)

@@ -11,7 +11,7 @@ servers:
 tags:
   - name: Auth
     description: Endpoints de Autenticación y sesión de usuario
-  - name: Links
+  - name: Link
     description: Operaciones sobre los enlaces (crear, leer, actualizar, borrar)
 
 components:
@@ -24,53 +24,61 @@ components:
           format: uuid
           description: ID único del enlace.
           example: "a1b2c3d4-e5f6-7890-1234-567890abcdef"
-        created_at:
-          type: string
-          format: date-time
-          description: Fecha de creación del enlace.
-        long_url:
+        long:
           type: string
           format: url
           description: URL original y larga.
           example: "https://github.com/BrayanYin/url-shortener-app"
-        short_url:
+        short:
           type: string
           description: Código único que identifica al enlace corto.
           example: "aB1cD2e"
-        description:
+        clicks:
+          type: integer
+          description: Contador de clics del enlace.
+          example: 10
+        user:
+          $ref: '#/components/schemas/User'
+        expiresAt:
           type: string
-          description: Descripción opcional del enlace.
-          example: "Repositorio del proyecto"
-        user_id:
+          format: date-time
+          nullable: true
+          description: Fecha de expiración del enlace.
+        createdAt:
           type: string
-          format: uuid
-          description: ID del usuario propietario del enlace.
-        domain:
+          format: date-time
+          description: Fecha de creación del enlace.
+        updatedAt:
           type: string
-          description: Dominio utilizado para acortar el enlace.
-          example: "short.link"
+          format: date-time
+          description: Fecha de última actualización del enlace.
     InsertLink:
       type: object
       required:
-        - long_url
+        - long
+        - short
       properties:
-        long_url:
+        long:
           type: string
           format: url
           description: URL original que se desea acortar.
-        description:
+        short:
           type: string
-          description: Descripción opcional para el enlace.
+          description: Código corto para el enlace.
+        expiresAt:
+          type: string
+          format: date-time
+          nullable: true
+          description: Fecha de expiración opcional para el enlace.
     EditLink:
       type: object
+      required:
+        - long
       properties:
-        long_url:
+        long:
           type: string
           format: url
           description: Nueva URL original.
-        description:
-          type: string
-          description: Nueva descripción para el enlace.
     User:
       type: object
       properties:
@@ -85,6 +93,12 @@ components:
         avatar:
           type: string
           format: url
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
     ErrorResponse:
       type: object
       properties:
@@ -104,14 +118,14 @@ security:
   - cookieAuth: []
 
 paths:
-  /links:
+  /link:
     get:
       tags:
-        - Links
+        - Link
       summary: Redirige a la URL larga
-      description: Busca un enlace por su `short_url` y redirige al `long_url` original.
+      description: Busca un enlace por su `short` y redirige al `long` original.
       parameters:
-        - name: short_url
+        - name: short
           in: query
           required: true
           description: El código corto del enlace a buscar.
@@ -128,7 +142,7 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
     post:
       tags:
-        - Links
+        - Link
       summary: Crea un nuevo enlace corto
       description: Crea un nuevo enlace corto para el usuario autenticado.
       requestBody:
@@ -149,10 +163,10 @@ paths:
         '401':
           description: No autorizado.
 
-  /links/user:
+  /link/user:
     get:
       tags:
-        - Links
+        - Link
       summary: Obtiene todos los enlaces de un usuario
       description: Devuelve una lista con todos los enlaces creados por el usuario autenticado.
       responses:
@@ -167,10 +181,10 @@ paths:
         '401':
           description: No autorizado.
 
-  /links/{id}:
+  /link/{id}:
     patch:
       tags:
-        - Links
+        - Link
       summary: Edita un enlace existente
       description: Modifica la URL larga o la descripción de un enlace existente.
       parameters:
@@ -200,7 +214,7 @@ paths:
           description: Enlace no encontrado.
     delete:
       tags:
-        - Links
+        - Link
       summary: Elimina un enlace
       description: Elimina un enlace permanentemente por su ID.
       parameters:
@@ -212,7 +226,7 @@ paths:
             type: string
             format: uuid
       responses:
-        '240':
+        '204':
           description: Enlace eliminado exitosamente.
         '401':
           description: No autorizado.
