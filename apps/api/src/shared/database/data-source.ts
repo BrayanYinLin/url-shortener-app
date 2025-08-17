@@ -5,9 +5,11 @@ import {
   env_pg_password,
   env_pg_port,
   env_pg_user
-} from '../../config/enviroment'
-import { User } from '../../features/auth/entities/user.entity'
-import { Provider } from '../../features/auth/entities/provider.entity'
+} from '../config/enviroment'
+import { User } from '../../modules/auth/entities/user.entity'
+import { Provider } from '../../modules/auth/entities/provider.entity'
+import { Link } from '@link/entities/link.entity'
+import { Metric } from '@link/entities/metric.entity'
 
 export const AppDataSource = new DataSource({
   type: 'postgres',
@@ -18,7 +20,7 @@ export const AppDataSource = new DataSource({
   database: env_pg_db,
   synchronize: true,
   logging: true,
-  entities: [User, Provider],
+  entities: [User, Provider, Link, Metric],
   subscribers: [],
   migrations: []
 })
