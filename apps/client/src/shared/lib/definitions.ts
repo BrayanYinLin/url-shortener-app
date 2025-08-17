@@ -8,4 +8,4 @@ export const ENDPOINTS = {
 
 // El origen del sitio web se puede determinar dinámicamente donde sea necesario,
 // pero ya no se requiere para las llamadas a la API.
-export const WEBSITE = '/'
+export const WEBSITE = window.location.origin

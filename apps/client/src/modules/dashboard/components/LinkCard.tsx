@@ -22,7 +22,7 @@ export function LinkCard({ id, long, short, clicks, expires_at }: Link) {
   const [editModal, setEditModal] = useState<boolean>(false)
 
   const copyToClipboard = (link: string) => {
-    const url = `${WEBSITE}${link}`
+    const url = `${WEBSITE}/${link}`
     navigator.clipboard.writeText(url)
     setCopied(true)
   }

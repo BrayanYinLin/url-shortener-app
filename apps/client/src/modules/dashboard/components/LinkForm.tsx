@@ -53,7 +53,7 @@ export default function LinkForm() {
       }
 
       const iso = getExpirationWithTimezone(expiration!)
-      const link = await createLink({ long, short, expires_at: iso! })
+      const link = await createLink({ long, short, expiresAt: iso! })
       await fetchLinks()
 
       shortInput.current!.value = ''

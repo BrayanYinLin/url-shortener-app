@@ -1,18 +1,14 @@
 import { useEffect } from 'react'
-import { useNavigate, useParams } from 'react-router'
-import { getLinkByShort } from '../lib/services'
+import { useParams } from 'react-router'
 import { RedirectingIcon } from '@/components/Icons'
+import { ENDPOINTS } from '@/lib/definitions'
 
 export function Redirect() {
   const { short } = useParams()
-  const navigate = useNavigate()
 
   useEffect(() => {
     if (!short) return
-
-    getLinkByShort({ name: short })
-      .then(({ long }) => (window.location.href = long))
-      .catch(() => navigate('/not-found'))
+    window.location.href = `${ENDPOINTS.LINK}?short=${short}`
   }, [])
   return (
     <main className="bg-pattern min-h-screen flex flex-col justify-center items-center">

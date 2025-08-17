@@ -13,7 +13,11 @@ export const getLinkByShort = async ({ name }: { name: string }) => {
     throw new LinkError(msg)
   }
 
+  const redirectUrl = response.headers.get('Location')
+
   const links: Link = await response.json()
+
+  Object.assign(links, { long: redirectUrl })
 
   return links
 }

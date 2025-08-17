@@ -5,9 +5,9 @@ import { useTranslationStore } from '@/lib/stores'
 export const GoogleSignInButton = () => {
   const { t } = useTranslationStore()
   const handleSignIn = async () => {
-    const response = await fetch(`${ENDPOINTS.AUTH}google`)
-    const { link } = await response.json()
-    window.location.href = link
+    await fetch(`${ENDPOINTS.AUTH}google`)
+    // const { link } = await response.json()
+    // window.location.href = link
   }
 
   return (
@@ -25,9 +25,7 @@ export const GoogleSignInButton = () => {
 export const GithubSignInButton = () => {
   const { t } = useTranslationStore()
   const handleGithubSignIn = async () => {
-    const response = await fetch(`${ENDPOINTS.AUTH}github`)
-    const { link } = await response.json()
-    window.location.href = link
+    window.location.href = 'http://localhost:5373/api/auth/github'
   }
 
   return (
