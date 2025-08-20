@@ -167,14 +167,9 @@ class LinkServiceImpl implements LinkService {
       })
     }
 
-    const link = this.linkRepository.create({
-      long: data.long,
-      short: duplicated.short,
-      expiresAt: duplicated.expiresAt,
-      user: user
-    })
+    duplicated.long = data.long
 
-    return await this.linkRepository.save(link)
+    return await this.linkRepository.save(duplicated)
   }
 
   async findByShort({ short }: ShortParams): Promise<ResponseLinkDto> {
@@ -199,25 +194,12 @@ class LinkServiceImpl implements LinkService {
   }
 
   async increaseClicksCounter({ short }: ShortParams): Promise<void> {
-    const link = await this.linkRepository.findOne({
-      where: {
-        short
-      }
-    })
-
-    if (!link) {
-      throw new AppError({
-        code: ERROR_NAMES.NOT_FOUND,
-        httpCode: ERROR_HTTP_CODES.NOT_FOUND,
-        message: 'Link not found',
-        isOperational: true
-      })
-    }
-
-    await this.linkRepository.save({
-      ...link,
-      clicks: link.clicks++
-    })
+    await this.linkRepository
+      .createQueryBuilder()
+      .update()
+      .set({ clicks: () => 'clicks + 1' })
+      .where('short = :short', { short })
+      .execute()
   }
 
   async delete({ id }: DeleteParams): Promise<boolean> {

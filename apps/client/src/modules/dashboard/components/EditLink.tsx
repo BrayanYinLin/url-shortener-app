@@ -3,6 +3,7 @@ import { useTranslationStore } from '@/lib/stores'
 import { FormEvent, useRef } from 'react'
 import { editLink } from '../lib/services'
 import { Link } from 'root/types'
+import { useLinksStore } from '../lib/stores'
 
 export function EditLink({
   id,
@@ -15,6 +16,7 @@ export function EditLink({
 }) {
   const { t } = useTranslationStore()
   const form = useRef<HTMLFormElement | null>(null)
+  const { fetchLinks } = useLinksStore()
 
   const submit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
@@ -23,6 +25,7 @@ export function EditLink({
 
     try {
       await editLink({ id, long: url })
+      await fetchLinks()
       animateClosing()
     } catch (e) {
       console.error(e)

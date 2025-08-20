@@ -8,6 +8,7 @@ export function Redirect() {
 
   useEffect(() => {
     if (!short) return
+
     window.location.href = `${ENDPOINTS.LINK}?short=${short}`
   }, [])
   return (

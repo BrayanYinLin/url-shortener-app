@@ -66,12 +66,7 @@ class LinkCtrl {
 
     try {
       const { long } = await this.service.findByShort({ short: String(short) })
-
-      res.on(
-        'finish',
-        async () =>
-          await this.service.increaseClicksCounter({ short: String(short) })
-      )
+      await this.service.increaseClicksCounter({ short: String(short) })
       return res.redirect(301, long)
     } catch (e) {
       next(e)
