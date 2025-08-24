@@ -2,6 +2,7 @@ import { NextFunction, Request, Response } from 'express'
 import { ERROR_MESSAGES } from '../../../common/definitions'
 import { LinkServiceImpl } from '../services/link.service'
 import { ERROR_HTTP_CODES } from '@shared/config/constants'
+import { timestampTz } from '@link/utils/date'
 
 class LinkCtrl {
   constructor(private readonly service = new LinkServiceImpl()) {}
@@ -65,9 +66,25 @@ class LinkCtrl {
     const { short } = req.query
 
     try {
-      const { long } = await this.service.findByShort({ short: String(short) })
-      await this.service.increaseClicksCounter({ short: String(short) })
-      return res.redirect(301, long)
+      const { id, long } = await this.service.findByShort({
+        short: String(short)
+      })
+      await this.service.logClicks({ id: String(id) })
+      await this.service.logMetrics({
+        id: id,
+        referer: req.headers.referer ?? null,
+        userAgent: req.headers['user-agent'] ?? null,
+        accessDate: timestampTz
+      })
+
+      res.set({
+        'Cache-Control': 'no-store, no-cache, must-revalidate',
+        Pragma: 'no-cache',
+        Expires: '0'
+      })
+
+      // El codigo 302 evita que el navegador cachee la redireccion y afecte a log de metricas
+      return res.redirect(302, long)
     } catch (e) {
       next(e)
     }

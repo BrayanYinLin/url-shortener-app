@@ -1,21 +1,22 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm'
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm'
+import { Link } from './link.entity'
 
 @Entity()
 class Metric {
   @PrimaryGeneratedColumn('uuid')
   id!: string
 
-  @Column({ type: 'varchar' })
-  ipAddress!: string
+  @ManyToOne(() => Link, (link) => link.metrics)
+  link!: Link
 
-  @Column({ type: 'varchar' })
-  userAgent!: string
+  @Column({ type: 'varchar', nullable: true })
+  userAgent: string | null = null
 
-  @Column({ type: 'varchar' })
-  referer!: string
+  @Column({ type: 'varchar', nullable: true })
+  referer: string | null = null
 
-  @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
-  createdAt!: Date
+  @Column({ type: 'timestamptz', nullable: false })
+  accessDate!: Date
 }
 
 export { Metric }

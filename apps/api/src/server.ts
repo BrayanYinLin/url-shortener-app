@@ -9,11 +9,18 @@ import helmet from 'helmet'
 import passport from 'passport'
 import { swaggerDocs } from '@shared/docs/parse-docs'
 import swaggerUI from 'swagger-ui-express'
+import logger from '@shared/utils/logger'
 
 const app = express()
 
 app.use(corsOrigins())
-app.use(morgan('dev'))
+app.use(
+  morgan('dev', {
+    stream: {
+      write: (message) => logger.http(message.trim())
+    }
+  })
+)
 app.use(express.json())
 app.use(cookieParser())
 app.use(passport.initialize())

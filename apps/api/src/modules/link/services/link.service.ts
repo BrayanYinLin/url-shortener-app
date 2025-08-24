@@ -6,6 +6,7 @@ import {
   DeleteParams,
   EditLinkInput,
   LinkService,
+  LogClicksParams,
   ShortParams
 } from '../link'
 import { AppError } from '@shared/utils/error-factory'
@@ -15,13 +16,16 @@ import { User } from '@root/modules/auth/entities/user.entity'
 import {
   CreateLinkSchema,
   EditLinkSchema,
+  LogMetricDto,
   ResponseLinkDto
 } from '../entities/dtos/link.dto'
+import { Metric } from '@link/entities/metric.entity'
 
 class LinkServiceImpl implements LinkService {
   constructor(
     private readonly userRepository = AppDataSource.getRepository(User),
-    private readonly linkRepository = AppDataSource.getRepository(Link)
+    private readonly linkRepository = AppDataSource.getRepository(Link),
+    private readonly metricRepository = AppDataSource.getRepository(Metric)
   ) {}
 
   async findLinksByUser({ token }: AuthContext): Promise<Link[]> {
@@ -189,17 +193,45 @@ class LinkServiceImpl implements LinkService {
     }
 
     return {
+      id: link.id,
       long: link.long
     }
   }
 
-  async increaseClicksCounter({ short }: ShortParams): Promise<void> {
-    await this.linkRepository
-      .createQueryBuilder()
-      .update()
-      .set({ clicks: () => 'clicks + 1' })
-      .where('short = :short', { short })
-      .execute()
+  async logClicks({ id }: LogClicksParams): Promise<void> {
+    await this.linkRepository.increment({ id }, 'clicks', 1)
+  }
+
+  async logMetrics({
+    id,
+    referer,
+    userAgent,
+    accessDate
+  }: LogMetricDto): Promise<void> {
+    const link = await this.linkRepository.findOne({
+      where: {
+        id: id
+      },
+      relations: ['user']
+    })
+
+    if (!link) {
+      throw new AppError({
+        code: ERROR_NAMES.NOT_FOUND,
+        httpCode: ERROR_HTTP_CODES.NOT_FOUND,
+        message: 'Link not found.',
+        isOperational: true
+      })
+    }
+
+    const metric = this.metricRepository.create({
+      link,
+      referer,
+      userAgent,
+      accessDate
+    })
+
+    await this.metricRepository.save(metric)
   }
 
   async delete({ id }: DeleteParams): Promise<boolean> {

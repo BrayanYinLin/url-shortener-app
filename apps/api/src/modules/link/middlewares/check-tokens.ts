@@ -15,12 +15,14 @@ export const checkTokens = (
       message: 'Missing access token',
       path: req.path
     })
+    return
   } else if (!access_token && !refresh_token) {
     res.status(401).json({
       status: ERROR_HTTP_CODES.AUTHENTICATION,
       message: 'Missing access token',
       path: req.path
     })
+    return
   }
 
   next()

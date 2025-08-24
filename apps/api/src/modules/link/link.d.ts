@@ -1,10 +1,15 @@
-import { CreateLinkDto, ResponseLinkDto } from './entities/dtos/link.dto'
+import {
+  CreateLinkDto,
+  LogMetricDto,
+  ResponseLinkDto
+} from './entities/dtos/link.dto'
 import { Link } from './entities/link.entity'
 
 type AuthContext = { token: string }
 type CreateLinkInput = { linkDto: CreateLinkDto } & AuthContext
 type EditLinkInput = { id: string; linkDto: CreateLinkDto } & AuthContext
 type ShortParams = { short: string }
+type LogClicksParams = { id: string }
 type DeleteParams = { id: string }
 
 export interface LinkService {
@@ -12,6 +17,7 @@ export interface LinkService {
   create({ linkDto, token }: CreateLinkInput): Promise<Link>
   edit({ id, linkDto, token }: EditLinkInput): Promise<Link>
   findByShort({ short }: ShortParams): Promise<ResponseLinkDto>
-  increaseClicksCounter({ short }: ShortParams): Promise<void>
+  logClicks({ id }: LogClicksParams): Promise<void>
+  logMetrics({ id }: LogMetricDto): Promise<void>
   delete({ id }: DeleteParams): Promise<boolean>
 }

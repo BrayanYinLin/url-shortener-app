@@ -1,5 +1,12 @@
 import { User } from '@auth/entities/user.entity'
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm'
+import {
+  Column,
+  Entity,
+  ManyToOne,
+  OneToMany,
+  PrimaryGeneratedColumn
+} from 'typeorm'
+import { Metric } from './metric.entity'
 
 @Entity()
 class Link {
@@ -17,6 +24,9 @@ class Link {
 
   @ManyToOne(() => User, (user) => user.links)
   user!: User
+
+  @OneToMany(() => Metric, (metric) => metric.link)
+  metrics!: Metric[]
 
   @Column({
     type: 'timestamp with time zone',
