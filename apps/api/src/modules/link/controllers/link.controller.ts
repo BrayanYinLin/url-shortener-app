@@ -3,6 +3,7 @@ import { ERROR_MESSAGES } from '../../../common/definitions'
 import { LinkServiceImpl } from '../services/link.service'
 import { ERROR_HTTP_CODES } from '@shared/config/constants'
 import { timestampTz } from '@link/utils/date'
+import { addMetricsJob } from '@link/queues/metric.queue'
 
 class LinkCtrl {
   constructor(private readonly service = new LinkServiceImpl()) {}
@@ -69,8 +70,8 @@ class LinkCtrl {
       const { id, long } = await this.service.findByShort({
         short: String(short)
       })
-      await this.service.logClicks({ id: String(id) })
-      await this.service.logMetrics({
+
+      await addMetricsJob({
         id: id,
         referer: req.headers.referer ?? null,
         userAgent: req.headers['user-agent'] ?? null,

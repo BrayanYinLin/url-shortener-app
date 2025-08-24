@@ -30,6 +30,14 @@ const RATE_LIMITER = {
   REQUEST_LIMIT: 100 // Limit each IP to 100 requests per `window` (here, per 15 minutes)
 } as const
 
+const QUEUES = {
+  METRIC: 'metric-queue'
+} as const
+
+const JOBS = {
+  LOG_METRIC: 'log-metric'
+} as const
+
 type Code = (typeof ERROR_NAMES)[keyof typeof ERROR_NAMES]
 type HttpCode = (typeof ERROR_HTTP_CODES)[keyof typeof ERROR_HTTP_CODES]
 
@@ -38,6 +46,8 @@ export {
   ERROR_NAMES,
   ERROR_HTTP_CODES,
   TOKEN_PARAMS,
+  QUEUES,
+  JOBS,
   Code,
   HttpCode
 }

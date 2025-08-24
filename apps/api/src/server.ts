@@ -10,6 +10,7 @@ import passport from 'passport'
 import { swaggerDocs } from '@shared/docs/parse-docs'
 import swaggerUI from 'swagger-ui-express'
 import logger from '@shared/utils/logger'
+import { worker } from '@link/workers/metric.worker'
 
 const app = express()
 
@@ -35,5 +36,10 @@ app.use('/api/docs', swaggerUI.serve, swaggerUI.setup(swaggerDocs))
 app.use('/api/auth', routerAuth)
 app.use('/api/link', routerLink)
 app.use(handleError)
+
+worker.on('completed', (job, res) => {
+  const { id } = job.data
+  logger.info(`Link ${id} completed with result ${res}`)
+})
 
 export { app }
