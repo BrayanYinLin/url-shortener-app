@@ -19,7 +19,7 @@ export const AppDataSource = new DataSource({
   password: env_pg_password,
   database: env_pg_db,
   synchronize: true,
-  logging: true,
+  logging: ['error', 'warn'],
   entities: [User, Provider, Link, Metric],
   subscribers: [],
   migrations: []

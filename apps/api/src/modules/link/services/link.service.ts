@@ -20,6 +20,7 @@ import {
   ResponseLinkDto
 } from '../entities/dtos/link.dto'
 import { Metric } from '@link/entities/metric.entity'
+import { redisConnection } from '@shared/database/redis.source'
 
 class LinkServiceImpl implements LinkService {
   constructor(
@@ -117,7 +118,14 @@ class LinkServiceImpl implements LinkService {
       user: user
     })
 
-    return await this.linkRepository.save(link)
+    const savedLink = await this.linkRepository.save(link)
+
+    await redisConnection.hset(savedLink.short, {
+      id: savedLink.id,
+      long: savedLink.long
+    })
+
+    return savedLink
   }
 
   async edit({ id, linkDto, token }: EditLinkInput): Promise<Link> {
@@ -173,10 +181,25 @@ class LinkServiceImpl implements LinkService {
 
     duplicated.long = data.long
 
-    return await this.linkRepository.save(duplicated)
+    const savedLink = await this.linkRepository.save(duplicated)
+    await redisConnection.hset(savedLink.short, {
+      id: savedLink.id,
+      long: savedLink.long
+    })
+
+    return savedLink
   }
 
   async findByShort({ short }: ShortParams): Promise<ResponseLinkDto> {
+    const cachedLink = (await redisConnection.hgetall(short)) as ResponseLinkDto
+
+    if (!cachedLink.id && !cachedLink.long) {
+      return {
+        id: cachedLink.id,
+        long: cachedLink.long
+      }
+    }
+
     const link = await this.linkRepository.findOne({
       where: {
         short
@@ -189,6 +212,11 @@ class LinkServiceImpl implements LinkService {
         httpCode: ERROR_HTTP_CODES.NOT_FOUND,
         message: 'Link not found',
         isOperational: true
+      })
+    } else {
+      await redisConnection.hset(String(short), {
+        id: link.id,
+        long: link.long
       })
     }
 
@@ -235,6 +263,23 @@ class LinkServiceImpl implements LinkService {
   }
 
   async delete({ id }: DeleteParams): Promise<boolean> {
+    const foundLink = await this.linkRepository.findOne({
+      where: {
+        id: id
+      }
+    })
+
+    if (!foundLink) {
+      throw new AppError({
+        code: ERROR_NAMES.NOT_FOUND,
+        httpCode: ERROR_HTTP_CODES.NOT_FOUND,
+        message: 'Link not found',
+        isOperational: true
+      })
+    } else {
+      await redisConnection.del(foundLink.short)
+    }
+
     const { affected } = await this.linkRepository.delete({ id })
 
     return Boolean(affected)

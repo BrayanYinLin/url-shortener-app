@@ -26,7 +26,9 @@ async function bootstrap() {
     logger.info(`✅ Worker ready for queue: ${QUEUES.METRIC}`)
   )
   worker.on('completed', (job) =>
-    logger.info(`🎯 Job completed for link ${job.data.id}`)
+    logger.info(
+      `🎯 Job completed for link ${job.data.id} at ${job.data.accessDate}`
+    )
   )
   worker.on('failed', (job, err) =>
     logger.error(
