@@ -3,6 +3,10 @@ import {
   LogMetricDto,
   ResponseLinkDto
 } from './entities/dtos/link.dto'
+import {
+  FindMetricByLinkIdDto,
+  ResponseMetricDto
+} from './entities/dtos/metric.dto'
 import { Link } from './entities/link.entity'
 
 type AuthContext = { token: string }
@@ -20,4 +24,8 @@ export interface LinkService {
   logClicks({ id }: LogClicksParams): Promise<void>
   logMetrics({ id }: LogMetricDto): Promise<void>
   delete({ id }: DeleteParams): Promise<boolean>
+}
+
+export interface MetricService {
+  findAllByLinkId({ id }: FindMetricByLinkIdDto): Promise<ResponseMetricDto[]>
 }

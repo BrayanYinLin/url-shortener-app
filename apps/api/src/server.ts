@@ -10,6 +10,7 @@ import { swaggerDocs } from '@shared/docs/parse-docs'
 import swaggerUI from 'swagger-ui-express'
 import logger from '@shared/utils/logger'
 import { errorMiddleware } from '@shared/middlewares/error-middleware'
+import { routerMetric } from '@link/routers/metric.router'
 
 const app = express()
 
@@ -34,6 +35,7 @@ app.options('*', preflight())
 app.use('/api/docs', swaggerUI.serve, swaggerUI.setup(swaggerDocs))
 app.use('/api/auth', routerAuth)
 app.use('/api/link', routerLink)
+app.use('/api/metric', routerMetric)
 app.use(errorMiddleware)
 
 export { app }

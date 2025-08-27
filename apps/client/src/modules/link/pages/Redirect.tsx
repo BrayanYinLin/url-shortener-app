@@ -8,8 +8,9 @@ export function Redirect() {
 
   useEffect(() => {
     if (!short) return
+    const referer = document.referrer
 
-    window.location.href = `${ENDPOINTS.LINK}?short=${short}`
+    window.location.href = `${ENDPOINTS.LINK}?short=${short}&referer=${referer}`
   }, [])
   return (
     <main className="bg-pattern min-h-screen flex flex-col justify-center items-center">

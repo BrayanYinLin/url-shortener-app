@@ -64,7 +64,7 @@ class LinkCtrl {
   }
 
   async findLinkByShort(req: Request, res: Response, next: NextFunction) {
-    const { short } = req.query
+    const { short, referer } = req.query
 
     try {
       const { id, long } = await this.service.findByShort({
@@ -73,7 +73,7 @@ class LinkCtrl {
 
       await addMetricsJob({
         id: id,
-        referer: req.headers.referer ?? null,
+        referer: referer?.toString() ?? null,
         userAgent: req.headers['user-agent'] ?? null,
         accessDate: timestampTz
       })
