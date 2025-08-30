@@ -1,17 +1,10 @@
-import {
-  ArrowCornerIcon,
-  GitHubIcon,
-  LinkedInIcon,
-  ShortYourURLIcon
-} from '@/components/Icons'
+import { GitHubIcon } from '@/components/Icons'
 import { authentication } from '../lib/services'
-import { useTranslationStore, useUserStore } from '@/lib/stores'
-import { useNavigate } from 'react-router'
-import { LanguageButton } from '@/components/LanguageButton'
+import { useUserStore } from '@/lib/stores'
+import { Link, useNavigate } from 'react-router'
 
 export default function Home() {
   const { setUser } = useUserStore()
-  const { t } = useTranslationStore()
   const navigate = useNavigate()
 
   const handleStart = () => {
@@ -27,41 +20,50 @@ export default function Home() {
   }
 
   return (
-    <main className="bg-pattern bg-repeat min-h-screen flex flex-col items-center justify-center">
-      <div className="fixed top-3 right-3">
-        <LanguageButton />
-      </div>
-      <ShortYourURLIcon />
-
-      <h1 className="font-bold text-4xl my-2">{t('Main Title')}</h1>
-
-      <section className="m-4 flex flex-col xs:flex-row gap-2">
-        <button
-          type="button"
-          className="rounded-md bg-[#222] text-white px-6 py-2 text-xl font-semibold"
-          onClick={handleStart}
+    <main className="bg-pattern bg-repeat min-h-screen flex flex-col">
+      <nav className="bg-white px-6 py-2.5 flex items-center justify-between">
+        <h1 className="font-bold text-xs lg:text-base text-turquoise-blue-600">
+          Quick Shortener
+        </h1>
+        <Link
+          to="/signin"
+          className="px-3.5 py-2 border text-shark-950 border-shark-950 hover:border-turquoise-blue-500 hover:text-turquoise-blue-500 rounded-sm transition-all duration-200 text-xs lg:text-base"
         >
-          {t('Get Started')}
-        </button>
-        <a
-          href="https://github.com/BrayanYinLin/best-shortener"
-          type="button"
-          className="bg-white-hue border border-slate-300 shadow-sm rounded-md px-6 py-2 flex items-center gap-2 text-xl font-semibold"
-        >
-          <GitHubIcon /> <span>{t('Star on Github')}</span>
-        </a>
+          Sign in
+        </Link>
+      </nav>
+      <section className="flex flex-col items-center gap-3 lg:gap-6 my-12">
+        <h1 className="inline-block w-max font-extrabold text-3xl lg:text-6xl my-2">
+          Simplify your <span className="text-turquoise-blue-600">links</span>.{' '}
+          <br />
+          Expand your <span className="text-turquoise-blue-600">reach</span>.
+        </h1>
+        <p className="w-4/5 lg:w-1/2 text-center font-medium text-xs lg:text-base">
+          Shorten your links quickly and securely. Share, manage, and analyze
+          with a simple yet powerful tool.
+        </p>
+        <div className="flex gap-4">
+          <button
+            type="button"
+            className="cursor-pointer px-5 py-2 bg-turquoise-blue-500 text-white rounded-sm transition-all duration-200 hover:bg-turquoise-blue-400 hover:shadow-turquoise-hover shadow-turquoise-simple font-bold text-base lg:text-lg"
+            onClick={handleStart}
+          >
+            Get Started
+          </button>
+          <Link
+            to="https://github.com/BrayanYinLin/url-shortener-app"
+            className="flex gap-2 px-5 py-2 rounded-sm border border-shark-950"
+          >
+            <GitHubIcon /> ¡Star in Github!
+          </Link>
+        </div>
+
+        <img
+          src="/world-internet-ilustration.webp"
+          alt="world ilustration"
+          className="w-72"
+        />
       </section>
-
-      <footer className="fixed bottom-6 left-6">
-        <a
-          href="https://www.linkedin.com/in/brayan-yin-lin-4b9a6a2ba/"
-          className="flex gap-2 items-center"
-          target="_blank"
-          rel="noopener"
-        >
-          <LinkedInIcon /> Brayan Yin Lin <ArrowCornerIcon />
-        </a>
-      </footer>
     </main>
   )
 }

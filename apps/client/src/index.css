@@ -1,13 +1,37 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
 
 @layer base {
-  @font-face {
-    font-family: 'Inter';
-    font-display: swap;
-    src: url(/public/inter-variable.ttf);
+  .bg-pattern {
+    background-image: url('/tile.webp') ;
+    background-size: 200px;
   }
+
+  @font-face {
+    font-family: 'jakarta';
+    font-display: swap;
+    src: url(/plusjakarta-variable.ttf);
+  }
+}
+
+@theme {
+  --color-shark-950: #242424;
+  --color-turquoise-blue-50: #eafffe;
+  --color-turquoise-blue-100: #cbffff;
+  --color-turquoise-blue-200: #9efcff;
+  --color-turquoise-blue-300: #5bf6ff;
+  --color-turquoise-blue-400: #00e5ff;
+  --color-turquoise-blue-500: #00c9e5;
+  --color-turquoise-blue-600: #00a0c0;
+  --color-turquoise-blue-700: #037f9b;
+  --color-turquoise-blue-800: #0d657d;
+  --color-turquoise-blue-900: #105469;
+  --color-turquoise-blue-950: #033749;
+
+  --font-jakarta: "jakarta", sans-serif;
+
+  --shadow-turquoise-simple: 0px 0px 4px #00c9e5;
+  --shadow-turquoise-hover: 0px 0px 8px #00e5ff;
+
 }
 
 ::-webkit-scrollbar {
