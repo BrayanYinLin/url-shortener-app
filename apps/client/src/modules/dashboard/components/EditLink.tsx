@@ -1,5 +1,4 @@
 import { Overlay } from '@/components/Overlay'
-import { useTranslationStore } from '@/lib/stores'
 import { FormEvent, useRef } from 'react'
 import { editLink } from '../lib/services'
 import { Link } from 'root/types'
@@ -14,7 +13,6 @@ export function EditLink({
   short: string
   close: () => void
 }) {
-  const { t } = useTranslationStore()
   const form = useRef<HTMLFormElement | null>(null)
   const { fetchLinks } = useLinksStore()
 
@@ -33,8 +31,6 @@ export function EditLink({
   }
 
   const animateClosing = () => {
-    form.current?.classList.replace('animate-maximize', 'animate-minimize')
-
     const timer = setTimeout(() => {
       close()
       clearTimeout(timer)
@@ -46,13 +42,13 @@ export function EditLink({
       <form
         onSubmit={submit}
         ref={form}
-        className="animate-maximize bg-white-hue w-72 xs:w-96 p-2 rounded-md flex flex-col"
+        className="bg-white w-72 xs:w-96 p-2 rounded-md flex flex-col"
       >
         <h3 className="text-lg">
-          {t('Edit Title')} <span className="font-semibold">/{short}</span>
+          Editar enlance <span className="font-semibold">/{short}</span>
         </h3>
 
-        <label htmlFor="link">{t('Link')}</label>
+        <label htmlFor="link">Enlace</label>
         <input
           type="text"
           name="long"
@@ -63,16 +59,16 @@ export function EditLink({
         <div className="flex justify-between gap-2">
           <button
             type="button"
-            className="w-1/2 bg-slate-200 px-4 py-2 rounded font-semibold"
+            className="cursor-pointer w-1/2 border text-turquoise-blue-500 border-turquoise-blue-500 px-4 py-2 rounded font-semibold"
             onClick={animateClosing}
           >
-            {t('Cancel')}
+            Cancelar
           </button>
           <button
             type="submit"
-            className="w-1/2 bg-black-hue px-4 py-2 rounded text-white font-semibold"
+            className="cursor-pointer w-1/2 bg-turquoise-blue-500 hover:shadow-turquoise-simple px-4 py-2 rounded text-white font-semibold"
           >
-            {t('Edit Confirmation')}
+            Editar
           </button>
         </div>
       </form>
