@@ -6,10 +6,22 @@ export function viteDebugger(): Plugin {
     configureServer(server) {
       server.middlewares.use((req, res, next) => {
         const url = req.url?.split('?')[0] || ''
+        const hasExtension = /\.[a-zA-Z0-9]+$/.test(url)
+
+        if (
+          !hasExtension &&
+          !url.startsWith('/@vite') &&
+          !url.includes('@react-refresh')
+        ) {
+          console.log('[→ API]', req.url, '\n', {
+            method: req.method,
+            purpose: req.headers['purpose'],
+            fetchMode: req.headers['sec-fetch-mode']
+          })
+        }
 
         if (url.startsWith('/api')) {
-          console.log('[→ API]', url)
-          return next() // aquí proxy al backend si quieres
+          return next()
         }
 
         if (
@@ -19,11 +31,9 @@ export function viteDebugger(): Plugin {
           url.includes('.map') ||
           url.includes('@react-refresh')
         ) {
-          console.log('[→ Vite asset]', url)
           return next()
         }
 
-        console.log('[→ Frontend SPA]', url)
         return next()
       })
     }

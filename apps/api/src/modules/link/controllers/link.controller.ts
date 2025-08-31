@@ -1,9 +1,11 @@
 import { NextFunction, Request, Response } from 'express'
 import { ERROR_MESSAGES } from '../../../common/definitions'
 import { LinkServiceImpl } from '../services/link.service'
-import { ERROR_HTTP_CODES } from '@shared/config/constants'
+import { ERROR_HTTP_CODES, ERROR_NAMES } from '@shared/config/constants'
 import { timestampTz } from '@link/utils/date'
 import { addMetricsJob } from '@link/queues/metric.queue'
+import { AppError } from '@shared/utils/error-factory'
+import logger from '@shared/utils/logger'
 
 class LinkCtrl {
   constructor(private readonly service = new LinkServiceImpl()) {}
@@ -67,12 +69,21 @@ class LinkCtrl {
     const { short } = req.params
 
     try {
-      const { id, long } = await this.service.findByShort({
+      if (!Boolean(short)) {
+        throw new AppError({
+          code: ERROR_NAMES.NOT_FOUND,
+          httpCode: ERROR_HTTP_CODES.NOT_FOUND,
+          message: 'Short name not found',
+          isOperational: true
+        })
+      }
+
+      const link = await this.service.findByShort({
         short: String(short)
       })
 
-      await addMetricsJob({
-        id: id,
+      addMetricsJob({
+        id: link.id,
         referer: req.headers.referer ?? '',
         userAgent: req.headers['user-agent'] ?? null,
         accessDate: timestampTz
@@ -85,7 +96,7 @@ class LinkCtrl {
       })
 
       // El codigo 302 evita que el navegador cachee la redireccion y afecte a log de metricas
-      return res.redirect(302, long)
+      return res.redirect(302, link.long)
     } catch (e) {
       next(e)
     }

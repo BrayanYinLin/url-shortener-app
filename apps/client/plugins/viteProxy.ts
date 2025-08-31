@@ -21,7 +21,6 @@ export function viteProxy(): Plugin {
 
         const isPrefetch = purpose === 'prefetch' || method !== 'GET'
 
-        // 1. Si es asset interno de Vite (evitamos romper HMR)
         if (
           url.startsWith('/@vite') ||
           url.startsWith('/node_modules') ||
@@ -31,28 +30,27 @@ export function viteProxy(): Plugin {
           return next()
         }
 
-        // 2. Si es ruta del front declarada → dejar que React Router maneje
         if (FRONT_ROUTES.includes(url)) {
           return next()
         }
 
-        // 3. Si la ruta empieza con /api → ya está cubierta por el proxy normal
+        if (url.includes('undefined')) {
+          req.url = `/not-found`
+          return server.middlewares.handle(req, res, next)
+        }
+
         if (url.startsWith('/api')) {
           return next()
         }
 
-        // 4. Caso especial: rutas dinámicas tipo /abs-12 → redirigir al backend
-        // Reescribe /abs-12 → /api/link/abs-12
-
-        // Maneja la logica para evitar navegacion especulativa
-
         if (/^\/[a-zA-Z0-9_-]+$/.test(url)) {
           if (isPrefetch) {
-            // console.log('[Middleware] Ignorando prefetch de:', url)
             res.statusCode = 204
             return res.end()
           }
-          // console.log('[Middleware] Redirecting to backend:', `/api/link${url}`)
+
+          console.log('[→ Pre-Redirecting]', req.url)
+          console.log('[→ Redirecting] ', url)
           req.url = `/api/link${url}`
           return server.middlewares.handle(req, res, next)
         }

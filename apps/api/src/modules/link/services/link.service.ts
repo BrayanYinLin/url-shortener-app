@@ -21,6 +21,7 @@ import {
 } from '../entities/dtos/link.dto'
 import { Metric } from '@link/entities/metric.entity'
 import { redisConnection } from '@shared/database/redis.source'
+import logger from '@shared/utils/logger'
 
 class LinkServiceImpl implements LinkService {
   constructor(
@@ -193,7 +194,7 @@ class LinkServiceImpl implements LinkService {
   async findByShort({ short }: ShortParams): Promise<ResponseLinkDto> {
     const cachedLink = (await redisConnection.hgetall(short)) as ResponseLinkDto
 
-    if (!cachedLink.id && !cachedLink.long) {
+    if (cachedLink.id && cachedLink.long) {
       return {
         id: cachedLink.id,
         long: cachedLink.long
@@ -213,12 +214,12 @@ class LinkServiceImpl implements LinkService {
         message: 'Link not found',
         isOperational: true
       })
-    } else {
-      await redisConnection.hset(String(short), {
+    }
+
+    await redisConnection.hset(String(short), {
         id: link.id,
         long: link.long
       })
-    }
 
     return {
       id: link.id,
