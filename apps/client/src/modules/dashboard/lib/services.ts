@@ -72,7 +72,7 @@ export const createLink = async ({
   short: string
   expiresAt: string | null
 }) => {
-  const response = await fetch(`${ENDPOINTS.LINK}`, {
+  const response = await fetch(ENDPOINTS.LINK, {
     method: 'POST',
     credentials: 'include',
     headers: {
