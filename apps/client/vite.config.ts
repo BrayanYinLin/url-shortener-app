@@ -2,6 +2,7 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react-swc'
 import tailwindcss from '@tailwindcss/vite'
+import { viteProxy } from './plugins/viteProxy'
 
 // https://vite.dev/config/
 export default defineConfig({
@@ -13,7 +14,7 @@ export default defineConfig({
       }
     }
   },
-  plugins: [react(), tailwindcss()],
+  plugins: [react(), tailwindcss(), viteProxy()],
   resolve: {
     alias: {
       '@': '/src/shared/',

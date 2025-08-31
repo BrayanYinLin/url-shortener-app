@@ -10,7 +10,7 @@ import { User } from 'root/types'
 import { Link } from 'root/types'
 
 const getUserAuthorizedLink = async (): Promise<Link[]> => {
-  const response = await fetch(`${ENDPOINTS.LINK}user/`, {
+  const response = await fetch(`${ENDPOINTS.AUTH}links`, {
     method: 'GET',
     credentials: 'include'
   })

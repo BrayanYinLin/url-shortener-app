@@ -18,7 +18,7 @@ app.use(corsOrigins())
 app.use(
   morgan('dev', {
     stream: {
-      write: (message) => logger.http(message.trim())
+      write: (message) => logger.info(message.trim())
     }
   })
 )
