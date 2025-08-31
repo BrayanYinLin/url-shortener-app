@@ -1,6 +1,6 @@
 import { join } from 'node:path'
 
-const PATH_ENV = join(__dirname, '../../../../../.env')
+const PATH_ENV = join(process.cwd(), '../../.env')
 process.loadEnvFile(PATH_ENV)
 
 // export const env_website = join(__dirname, '../../../../client/dist')
