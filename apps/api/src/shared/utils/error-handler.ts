@@ -15,9 +15,9 @@ class ErrorHandler {
       if (
         err.code === ERROR_NAMES.NOT_FOUND &&
         req.path.includes('/api/link/') &&
-        req.query.short
+        req.method === 'GET'
       ) {
-        return res.redirect(301, 'http://localhost:5173/not-found')
+        return res.redirect(302, 'http://localhost:5173/not-found')
       }
 
       return res.status(Number(err.httpCode)).json({

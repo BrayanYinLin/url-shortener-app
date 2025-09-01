@@ -7,22 +7,24 @@ import CallbackGithubPage from './modules/auth/pages/CallbackGithub'
 import './index.css'
 import { Dashboard } from './modules/dashboard/pages/Dashboard'
 import CallbackGoogle from 'modules/auth/pages/CallbackGoogle'
-import { Redirect } from 'modules/link/pages/Redirect'
 import { NotFound } from 'modules/link/pages/NotFound'
+import { PAGES } from '@/config/constants'
+
+const { dashboard, signin, notFound, googleCallback, githubCallback } = PAGES
 
 createRoot(document.getElementById('root')!).render(
   <BrowserRouter>
     <Routes>
       <Route>
         <Route index element={<Home />} />
-        <Route path="dashboard" element={<Dashboard />} />
-        <Route path="signin" element={<SignIn />} />
-        <Route path="not-found" element={<NotFound />} />
-        <Route path=":short" element={<Redirect />} />
+        <Route path={dashboard} element={<Dashboard />} />
+        <Route path={signin} element={<SignIn />} />
+        <Route path={notFound} element={<NotFound />} />
+        {/* <Route path=":short" element={<Redirect />} /> */}
       </Route>
 
-      <Route path="/auth/github/callback" element={<CallbackGithubPage />} />
-      <Route path="/auth/google/callback" element={<CallbackGoogle />} />
+      <Route path={githubCallback} element={<CallbackGithubPage />} />
+      <Route path={googleCallback} element={<CallbackGoogle />} />
     </Routes>
   </BrowserRouter>
 )

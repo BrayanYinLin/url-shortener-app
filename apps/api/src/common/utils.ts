@@ -30,7 +30,7 @@ export const setCookiesSettings = (): CookieSettings => {
   const { FITHTEEN_DAYS_SECONDS, TWO_HOURS } = MILLISECONDS_TIMES
 
   const access_settings: CookieOptions = {
-    httpOnly: env_node === 'PRODUCTION',
+    httpOnly: true,
     maxAge: TWO_HOURS,
     domain:
       env_node === 'PRODUCTION'
@@ -42,7 +42,7 @@ export const setCookiesSettings = (): CookieSettings => {
   }
 
   const refresh_settings: CookieOptions = {
-    httpOnly: env_node === 'PRODUCTION',
+    httpOnly: true,
     maxAge: FITHTEEN_DAYS_SECONDS,
     domain:
       env_node === 'PRODUCTION'
@@ -58,7 +58,7 @@ export const setCookiesSettings = (): CookieSettings => {
 
 export const getClearCookiesSettings = () => {
   const settings: CookieOptions = {
-    httpOnly: env_node === 'PRODUCTION',
+    httpOnly: true,
     secure: env_node === 'PRODUCTION',
     // expires: new Date(0),
     domain:

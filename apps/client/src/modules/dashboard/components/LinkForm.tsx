@@ -1,19 +1,11 @@
-import { FormEvent, useRef, useState } from 'react'
+import { FormEvent, useRef } from 'react'
 import { createLink } from '../lib/services'
 import { useLinksStore } from '../lib/stores'
-import { showToast } from '../lib/events'
-import { LinkError } from '@/lib/errors'
-import { useTranslationStore } from '@/lib/stores'
-import { LinkIcon, TimerIcon } from '@/components/Icons'
 import { getExpirationWithTimezone } from '../lib/utils'
-
-type LinkGenerationMode = 'CLASSIC' | 'TIMER' | 'COUNTER'
+import { CreateLinkSchema } from '../lib/link.store'
 
 export default function LinkForm() {
-  const { t } = useTranslationStore()
   const { fetchLinks } = useLinksStore()
-  const [linkGenerationMode, setLinkGenerationMode] =
-    useState<LinkGenerationMode>('CLASSIC')
   const shortInput = useRef<HTMLInputElement | null>(null)
   const linkInput = useRef<HTMLInputElement | null>(null)
 
@@ -28,50 +20,25 @@ export default function LinkForm() {
       return
     }
 
-    if (
-      short === 'dashboard' ||
-      short === 'signin' ||
-      short === 'auth' ||
-      short === 'not-found'
-    ) {
-      showToast({
-        title: t('Creating Link Error'),
-        message: t('Name Reserved'),
-        isError: true
-      })
-      return
-    }
-
     try {
-      // eslint-disable-next-line no-useless-escape
-      const shortRegex = /^[A-Za-z0-9\-\+\*\_]*$/g
-      const urlRegex =
-        /^(https?:\/\/)?([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}(:\d+)?(\/[^\s?#]*)?(\?[^\s#]*)?(#[^\s]*)?$/g
+      const iso = getExpirationWithTimezone(expiration!)
+      const { data, error } = CreateLinkSchema.safeParse({
+        short: short,
+        long: long,
+        expiresAt: iso
+      })
 
-      if (!shortRegex.test(short) || !urlRegex.test(long)) {
-        return
+      if (!data) {
+        throw new Error(error.toString())
       }
 
-      const iso = getExpirationWithTimezone(expiration!)
-      const link = await createLink({ long, short, expiresAt: iso! })
+      await createLink(data)
       await fetchLinks()
 
       shortInput.current!.value = ''
       linkInput.current!.value = ''
-      showToast({
-        title: t('New Link Confirmation'),
-        message: link.long,
-        isError: false
-      })
     } catch (e) {
       console.error(e)
-      if (e instanceof LinkError) {
-        showToast({
-          title: t('Creating Link Error'),
-          message: e.message,
-          isError: false
-        })
-      }
     }
   }
 
@@ -124,40 +91,15 @@ export default function LinkForm() {
       )
     }
   }
-
-  const changeToExpirationTimeMode = () => {
-    setLinkGenerationMode('TIMER')
-  }
-
-  const changeToClassicMode = () => {
-    setLinkGenerationMode('CLASSIC')
-  }
-
   return (
     <>
-      <section className="w-full mb-4 bg-white flex flex-col border border-slate-300 shadow-sm rounded-lg p-3 gap-2">
+      <section className="w-full mb-4 bg-white flex flex-col border border-shark-950/20 shadow-sm rounded-lg p-3 gap-2">
         <section className="flex justify-between">
-          <h2 className="font-bold text-lg">{t('Create Shortened Link')}</h2>
-          <nav className="flex items-center border p-1 border-slate-300 shadow-sm rounded-md gap-2">
-            <button
-              type="button"
-              aria-label="classic link generation"
-              onClick={changeToClassicMode}
-            >
-              <LinkIcon />
-            </button>
-            <button
-              type="button"
-              aria-label="link with expirarion time"
-              onClick={changeToExpirationTimeMode}
-            >
-              <TimerIcon />
-            </button>
-          </nav>
+          <h2 className="font-bold text-lg">Nuevo enlace</h2>
         </section>
         <form
           onSubmit={handleSubmit}
-          className="flex flex-col md:flex-col gap-2"
+          className="flex flex-col lg:flex-row gap-2"
         >
           <input
             type="text"
@@ -179,20 +121,11 @@ export default function LinkForm() {
             onChange={handleURLTyping}
             required
           />
-          {linkGenerationMode === 'TIMER' && (
-            <input
-              type="datetime-local"
-              name="datetime"
-              id="datetime"
-              className="flex-1 border border-slate-300 shadow-sm rounded-md p-2 focus:outline-none"
-              placeholder="expiration time"
-            />
-          )}
           <button
             type="submit"
-            className="bg-black-hue text-white font-semibold px-4 py-2 rounded-md"
+            className="cursor-pointer hover:shadow-turquoise-simple transition-all duration-200 bg-turquoise-blue-500 text-white font-semibold px-4 py-2 rounded-md"
           >
-            {t('Shorten')}
+            Shorten
           </button>
         </form>
       </section>

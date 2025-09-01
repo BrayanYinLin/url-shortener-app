@@ -13,10 +13,8 @@ import { WEBSITE } from '@/lib/definitions'
 import { EditLink } from './EditLink'
 import moment from 'moment'
 import { getExpirationWithTimezone } from '../lib/utils'
-import { useTranslationStore } from '@/lib/stores'
 
 export function LinkCard({ id, long, short, clicks, expires_at }: Link) {
-  const { t } = useTranslationStore()
   const [copied, setCopied] = useState(false)
   const [removeModal, setRemoveModal] = useState(false)
   const [editModal, setEditModal] = useState<boolean>(false)
@@ -95,7 +93,7 @@ export function LinkCard({ id, long, short, clicks, expires_at }: Link) {
         </p>
         {expires_at && (
           <p className="text-xs font-medium overflow-hidden whitespace-nowrap overflow-ellipsis">
-            {t('Expires after')}
+            Expires after
             {moment(getExpirationWithTimezone(expires_at)).format(
               'YYYY-MM-DD HH:mm'
             )}

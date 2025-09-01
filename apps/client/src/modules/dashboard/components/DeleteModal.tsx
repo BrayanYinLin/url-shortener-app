@@ -1,5 +1,4 @@
 import { Overlay } from '@/components/Overlay'
-import { useTranslationStore } from '@/lib/stores'
 import { useRef } from 'react'
 import { User } from 'root/types'
 import { useLinksStore } from '../lib/stores'
@@ -14,12 +13,9 @@ export function DeleteModal({
   close: () => void
 }) {
   const { remove } = useLinksStore()
-  const { t } = useTranslationStore()
   const modal = useRef<HTMLElement | null>(null)
 
   const handleClose = () => {
-    modal.current?.classList.replace('animate-maximize', 'animate-minimize')
-
     const timer = setTimeout(() => {
       close()
 
@@ -28,8 +24,6 @@ export function DeleteModal({
   }
 
   const handleDelete = (id: Required<User>['id']) => {
-    modal.current?.classList.replace('animate-maximize', 'animate-minimize')
-
     const timer = setTimeout(() => {
       close()
       remove({ id })
@@ -40,29 +34,26 @@ export function DeleteModal({
 
   return (
     <Overlay>
-      <section
-        className="animate-maximize bg-white rounded-md w-72 xs:w-96 p-2"
-        ref={modal}
-      >
+      <section className="bg-white rounded-md w-72 xs:w-96 p-2" ref={modal}>
         <h3 className="text-lg font-semibold">
-          {t('Delete Prompt')} <span className="font-bold">/{short}</span>?
+          ¿Deseas eliminar <span className="font-bold">/{short}</span>?
         </h3>
 
         <div className="w-full flex flex-row mt-4 gap-2">
           <button
             type="button"
-            className="w-1/2 py-2 px-6 rounded text-base font-medium bg-slate-200"
+            className="cursor-pointer w-1/2 py-2 px-6 rounded text-shark-950 text-base font-semibold border border-shark-950"
             onClick={handleClose}
             aria-label="close panel"
           >
-            {t('Cancel')}
+            Cancelar
           </button>
           <button
             type="button"
-            className="w-1/2 py-2 px-6 rounded text-base font-medium bg-[#d3102f] text-white-hue"
+            className="cursor-pointer w-1/2 py-2 px-6 rounded text-white text-base font-semibold bg-turquoise-blue-500 text-white-hue"
             onClick={() => handleDelete(id)}
           >
-            {t('Delete')}
+            Borrar
           </button>
         </div>
       </section>
