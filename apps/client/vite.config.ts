@@ -19,6 +19,7 @@ export default defineConfig({
     alias: {
       '@': '/src/shared/',
       '@providers': '/src/app/providers/',
+      '@pages': '/src/pages/',
       modules: '/src/modules/',
       root: '/src/'
     }

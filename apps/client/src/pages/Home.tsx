@@ -1,10 +1,10 @@
 import { GitHubIcon } from '@/components/Icons'
-import { authentication } from '../lib/services'
+import { authentication } from '../modules/home/lib/services'
 import { useUserStore } from '@/lib/stores'
 import { Link, useNavigate } from 'react-router'
 import { Trans, useTranslation } from 'react-i18next'
 
-export default function Home() {
+export function Home() {
   const { t } = useTranslation()
   const { setUser } = useUserStore()
   const navigate = useNavigate()

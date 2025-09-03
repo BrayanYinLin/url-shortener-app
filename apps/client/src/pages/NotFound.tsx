@@ -1,9 +1,9 @@
 import { GhostIcon } from '@/components/Icons'
-import { useTranslationStore } from '@/lib/stores'
+import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router'
 
 export function NotFound() {
-  const { t } = useTranslationStore()
+  const { t } = useTranslation()
   const navigate = useNavigate()
 
   const goHome = () => navigate('/', { replace: true })

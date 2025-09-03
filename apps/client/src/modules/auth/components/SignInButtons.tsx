@@ -1,9 +1,9 @@
 import { GitHubIcon, GoogleIcon } from '@/components/Icons'
 import { ENDPOINTS } from '@/lib/definitions'
-import { useTranslationStore } from '@/lib/stores'
+import { useTranslation } from 'react-i18next'
 
 export const GoogleSignInButton = () => {
-  const { t } = useTranslationStore()
+  const { t } = useTranslation()
   const handleSignIn = async () => {
     await fetch(`${ENDPOINTS.AUTH}google`)
     // const { link } = await response.json()
@@ -13,17 +13,17 @@ export const GoogleSignInButton = () => {
   return (
     <button
       type="button"
-      className="flex gap-2 font-semibold px-4 py-2 border-[1px] bg-white border-[#808080] my-2 rounded-md"
+      className="cursor-pointer flex gap-2 font-semibold px-4 py-2 border-[1px] bg-white border-[#808080] my-2 rounded-md"
       onClick={handleSignIn}
     >
       <GoogleIcon />
-      {t('Continue Google')}
+      {t('continueWithGoogle')}
     </button>
   )
 }
 
 export const GithubSignInButton = () => {
-  const { t } = useTranslationStore()
+  const { t } = useTranslation()
   const handleGithubSignIn = async () => {
     window.location.href = 'http://localhost:5373/api/auth/github'
   }
@@ -31,11 +31,11 @@ export const GithubSignInButton = () => {
   return (
     <button
       type="button"
-      className="flex gap-2 font-semibold px-4 py-2 border-[1px] bg-white border-[#808080] my-2 rounded-md"
+      className="cursor-pointer flex gap-2 font-semibold px-4 py-2 border-[1px] bg-white border-[#808080] my-2 rounded-md"
       onClick={handleGithubSignIn}
     >
       <GitHubIcon />
-      {t('Continue GitHub')}
+      {t('continueWithGitHub')}
     </button>
   )
 }

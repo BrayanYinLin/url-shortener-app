@@ -10,7 +10,9 @@ const resources = {
       productDescription:
         'Shorten your links quickly and securely. Share, manage, and analyze with a simple yet powerful tool.',
       starOnGithub: '¡Star on Github!',
-      getStarted: 'Get started'
+      getStarted: 'Get started',
+      continueWithGoogle: 'Continue with Google',
+      continueWithGitHub: 'Continue with GitHub'
     }
   },
   es: {
@@ -21,7 +23,9 @@ const resources = {
       productDescription:
         'Acorta tus enlaces de forma rápida y segura. Comparte, gestiona y analiza con una herramienta sencilla pero potente.',
       starOnGithub: '¡Califícame en Github!',
-      getStarted: 'Empezar'
+      getStarted: 'Empezar',
+      continueWithGoogle: 'Continuar con Google',
+      continueWithGitHub: 'Continuar con GitHub'
     }
   }
 }

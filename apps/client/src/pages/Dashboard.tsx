@@ -1,13 +1,13 @@
-import { ListLinks } from '../components/ListLinks'
-import LinkForm from '../components/LinkForm'
+import { ListLinks } from '../modules/dashboard/components/ListLinks'
+import LinkForm from '../modules/dashboard/components/LinkForm'
 import { createPortal } from 'react-dom'
-import { Toast } from '../components/Toast'
-import { useToast } from '../hooks/useToast'
-import { useUser } from '../hooks/useUser'
+import { Toast } from '../modules/dashboard/components/Toast'
+import { useToast } from '../modules/dashboard/hooks/useToast'
+import { useUser } from '../modules/dashboard/hooks/useUser'
 import { useEffect } from 'react'
-import { Sidebar } from '../components/Sidebar'
-import { useFilter } from '../hooks/useFilter'
-import { FilterBar } from '../components/FilterBar'
+import { Sidebar } from '../modules/dashboard/components/Sidebar'
+import { useFilter } from '../modules/dashboard/hooks/useFilter'
+import { FilterBar } from '../modules/dashboard/components/FilterBar'
 
 export function Dashboard() {
   const { user } = useUser()
