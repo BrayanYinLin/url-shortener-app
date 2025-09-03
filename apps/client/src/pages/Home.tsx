@@ -1,5 +1,5 @@
 import { GitHubIcon } from '@/components/Icons'
-import { authentication } from '../modules/home/lib/services'
+import { authentication } from '@auth/services/auth.service'
 import { useUserStore } from '@/lib/stores'
 import { Link, useNavigate } from 'react-router'
 import { Trans, useTranslation } from 'react-i18next'

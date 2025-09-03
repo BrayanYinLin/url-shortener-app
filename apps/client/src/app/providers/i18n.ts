@@ -12,7 +12,9 @@ const resources = {
       starOnGithub: '¡Star on Github!',
       getStarted: 'Get started',
       continueWithGoogle: 'Continue with Google',
-      continueWithGitHub: 'Continue with GitHub'
+      continueWithGitHub: 'Continue with GitHub',
+      logout: 'Logout',
+      lang: 'Language'
     }
   },
   es: {
@@ -25,7 +27,9 @@ const resources = {
       starOnGithub: '¡Califícame en Github!',
       getStarted: 'Empezar',
       continueWithGoogle: 'Continuar con Google',
-      continueWithGitHub: 'Continuar con GitHub'
+      continueWithGitHub: 'Continuar con GitHub',
+      logout: 'Cerrar sesión',
+      lang: 'Lenguaje'
     }
   }
 }

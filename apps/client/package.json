@@ -13,6 +13,8 @@
     "coverage": "vitest run --coverage"
   },
   "dependencies": {
+    "@tanstack/react-query": "5.85.9",
+    "axios": "^1.11.0",
     "i18next": "25.4.2",
     "luxon": "3.5.0",
     "moment": "2.30.1",

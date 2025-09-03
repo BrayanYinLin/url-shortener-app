@@ -20,6 +20,7 @@ export default defineConfig({
       '@': '/src/shared/',
       '@providers': '/src/app/providers/',
       '@pages': '/src/pages/',
+      '@auth': '/src/modules/auth/',
       modules: '/src/modules/',
       root: '/src/'
     }

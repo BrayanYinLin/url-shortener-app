@@ -1,5 +1,5 @@
-import { ENDPOINTS } from './definitions'
-import { TokenNotRefreshed } from './errors'
+import { ENDPOINTS } from '@/lib/definitions'
+import { TokenNotRefreshed } from '@/lib/errors'
 
 export const refreshUser = async () => {
   const response = await fetch(ENDPOINTS.AUTH.concat('refresh'), {

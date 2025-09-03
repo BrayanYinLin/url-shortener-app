@@ -63,7 +63,7 @@ export function LinkCard({ id, long, short, clicks, expires_at }: Link) {
           <button
             type="button"
             aria-label="copy icon"
-            className="p-1 rounded hover:bg-slate-100 transition-all duration-200"
+            className="cursor-pointer p-1 rounded hover:bg-slate-100 transition-all duration-200"
             onClick={() => copyToClipboard(short)}
           >
             {copied ? <CopiedSuccessfullyIcon /> : <CopyIcon />}
@@ -71,7 +71,7 @@ export function LinkCard({ id, long, short, clicks, expires_at }: Link) {
           <button
             type="button"
             aria-label="edit icon"
-            className="p-1 rounded hover:bg-slate-100 transition-all duration-200"
+            className="cursor-pointer p-1 rounded hover:bg-slate-100 transition-all duration-200"
             onClick={() => setEditModal(true)}
           >
             <EditIcon />
@@ -79,7 +79,7 @@ export function LinkCard({ id, long, short, clicks, expires_at }: Link) {
           <button
             type="button"
             aria-label="trash icon"
-            className="p-1 rounded hover:bg-slate-100 transition-all duration-200"
+            className="cursor-pointer p-1 rounded hover:bg-slate-100 transition-all duration-200"
             onClick={() => setRemoveModal(true)}
           >
             <TrashIcon />

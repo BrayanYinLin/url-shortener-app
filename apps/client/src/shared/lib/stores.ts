@@ -1,7 +1,7 @@
 import { create } from 'zustand'
 import { Language, resource, Resource, TranslationKeys } from './i18n'
 import { findLanguagePreference } from './utils'
-import { authentication } from 'modules/home/lib/services'
+import { authentication } from '@auth/services/auth.service'
 
 export type User = {
   id?: string

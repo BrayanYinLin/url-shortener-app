@@ -7,18 +7,22 @@ import { NotFound } from '@pages/NotFound'
 import { PAGES } from '@/config/constants'
 import '@providers/i18n'
 import '../index.css'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 
+const queryClient = new QueryClient()
 const { dashboard, signin, notFound } = PAGES
 
 createRoot(document.getElementById('root')!).render(
-  <BrowserRouter>
-    <Routes>
-      <Route>
-        <Route index element={<Home />} />
-        <Route path={dashboard} element={<Dashboard />} />
-        <Route path={signin} element={<SignIn />} />
-        <Route path={notFound} element={<NotFound />} />
-      </Route>
-    </Routes>
-  </BrowserRouter>
+  <QueryClientProvider client={queryClient}>
+    <BrowserRouter>
+      <Routes>
+        <Route>
+          <Route index element={<Home />} />
+          <Route path={dashboard} element={<Dashboard />} />
+          <Route path={signin} element={<SignIn />} />
+          <Route path={notFound} element={<NotFound />} />
+        </Route>
+      </Routes>
+    </BrowserRouter>
+  </QueryClientProvider>
 )
