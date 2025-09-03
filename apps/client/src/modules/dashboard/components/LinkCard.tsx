@@ -34,7 +34,7 @@ export function LinkCard({ id, long, short, clicks, expires_at }: Link) {
   }, [copied])
 
   return (
-    <article className="h-32 bg-white-hue border border-slate-300 shadow-sm rounded-md p-3 flex gap-4 flex-col justify-between">
+    <article className="h-32 bg-white-hue border border-shark-950/25 shadow-sm rounded-md p-3 flex gap-4 flex-col justify-between">
       {removeModal &&
         createPortal(
           <DeleteModal
