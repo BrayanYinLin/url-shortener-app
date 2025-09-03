@@ -19,6 +19,20 @@ services:
     volumes:
       - cache_data:/data
 
+  backend:
+    build: ./apps/api
+    container_name: backend
+    ports:
+      - "5373:5373"
+  
+  frontend:
+    build: ./apps/client
+    container_name: frontend
+    ports:
+      - "5173:80"
+    depends_on:
+      - backend
+
 volumes:
   shortener_data:
   cache_data:

@@ -93,7 +93,7 @@ export default function LinkForm() {
   }
   return (
     <>
-      <section className="w-full mb-4 bg-white flex flex-col border border-shark-950/20 shadow-sm rounded-lg p-3 gap-2">
+      <section className="w-full mb-4 bg-white flex flex-col border border-shark-950/25 shadow-sm rounded-lg p-3 gap-2">
         <section className="flex justify-between">
           <h2 className="font-bold text-lg">Nuevo enlace</h2>
         </section>
