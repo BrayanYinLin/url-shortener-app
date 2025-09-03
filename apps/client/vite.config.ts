@@ -18,6 +18,7 @@ export default defineConfig({
   resolve: {
     alias: {
       '@': '/src/shared/',
+      '@providers': '/src/app/providers/',
       modules: '/src/modules/',
       root: '/src/'
     }

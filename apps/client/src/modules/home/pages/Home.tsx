@@ -2,8 +2,10 @@ import { GitHubIcon } from '@/components/Icons'
 import { authentication } from '../lib/services'
 import { useUserStore } from '@/lib/stores'
 import { Link, useNavigate } from 'react-router'
+import { Trans, useTranslation } from 'react-i18next'
 
 export default function Home() {
+  const { t } = useTranslation()
   const { setUser } = useUserStore()
   const navigate = useNavigate()
 
@@ -29,18 +31,15 @@ export default function Home() {
           to="/signin"
           className="px-3.5 py-2 border text-shark-950 border-shark-950 hover:border-turquoise-blue-500 hover:text-turquoise-blue-500 rounded-sm transition-all duration-200 text-xs lg:text-base"
         >
-          Sign in
+          {t('signin')}
         </Link>
       </nav>
       <section className="flex flex-col items-center gap-3 lg:gap-6 my-12">
         <h1 className="inline-block w-max font-extrabold text-3xl lg:text-6xl my-2">
-          Simplify your <span className="text-turquoise-blue-600">links</span>.{' '}
-          <br />
-          Expand your <span className="text-turquoise-blue-600">reach</span>.
+          <Trans i18nKey="catchPhrase" components={{ span: <span /> }} />
         </h1>
         <p className="w-4/5 lg:w-1/2 text-center font-medium text-xs lg:text-base">
-          Shorten your links quickly and securely. Share, manage, and analyze
-          with a simple yet powerful tool.
+          {t('productDescription')}
         </p>
         <div className="flex gap-4">
           <button
@@ -48,13 +47,13 @@ export default function Home() {
             className="cursor-pointer px-5 py-2 bg-turquoise-blue-500 text-white rounded-sm transition-all duration-200 hover:bg-turquoise-blue-400 hover:shadow-turquoise-hover shadow-turquoise-simple font-bold text-base lg:text-lg"
             onClick={handleStart}
           >
-            Get Started
+            {t('getStarted')}
           </button>
           <Link
             to="https://github.com/BrayanYinLin/url-shortener-app"
             className="flex gap-2 px-5 py-2 rounded-sm border border-shark-950"
           >
-            <GitHubIcon /> ¡Star in Github!
+            <GitHubIcon /> {t('starOnGithub')}
           </Link>
         </div>
 
