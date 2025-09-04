@@ -6,7 +6,7 @@ import { verify } from 'jsonwebtoken'
 
 export const checkTokens = (
   req: Request,
-  res: Response,
+  _res: Response,
   next: NextFunction
 ) => {
   const access_token = req.cookies.access_token

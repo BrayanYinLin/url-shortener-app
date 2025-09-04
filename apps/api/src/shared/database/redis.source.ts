@@ -1,8 +1,9 @@
+import { env_redis_host, env_redis_port } from '@shared/config/enviroment'
 import IORedis from 'ioredis'
 
 const redisConnection = new IORedis({
-  host: '127.0.0.1',
-  port: 6379,
+  host: env_redis_host,
+  port: Number(env_redis_port),
   maxRetriesPerRequest: null
 })
 

@@ -21,7 +21,6 @@ import {
 } from '../entities/dtos/link.dto'
 import { Metric } from '@link/entities/metric.entity'
 import { redisConnection } from '@shared/database/redis.source'
-import logger from '@shared/utils/logger'
 
 class LinkServiceImpl implements LinkService {
   constructor(
@@ -217,9 +216,9 @@ class LinkServiceImpl implements LinkService {
     }
 
     await redisConnection.hset(String(short), {
-        id: link.id,
-        long: link.long
-      })
+      id: link.id,
+      long: link.long
+    })
 
     return {
       id: link.id,
@@ -281,7 +280,9 @@ class LinkServiceImpl implements LinkService {
       await redisConnection.del(foundLink.short)
     }
 
-    const { affected: metricsDeleted } = await this.metricRepository.delete({ link: { id: id } })
+    const { affected: metricsDeleted } = await this.metricRepository.delete({
+      link: { id: id }
+    })
     const { affected } = await this.linkRepository.delete({ id })
 
     return Boolean(affected) && Boolean(metricsDeleted)

@@ -5,7 +5,6 @@ import { ERROR_HTTP_CODES, ERROR_NAMES } from '@shared/config/constants'
 import { timestampTz } from '@link/utils/date'
 import { addMetricsJob } from '@link/queues/metric.queue'
 import { AppError } from '@shared/utils/error-factory'
-import logger from '@shared/utils/logger'
 
 class LinkCtrl {
   constructor(private readonly service = new LinkServiceImpl()) {}
@@ -69,7 +68,7 @@ class LinkCtrl {
     const { short } = req.params
 
     try {
-      if (!Boolean(short)) {
+      if (!short) {
         throw new AppError({
           code: ERROR_NAMES.NOT_FOUND,
           httpCode: ERROR_HTTP_CODES.NOT_FOUND,

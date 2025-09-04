@@ -9,11 +9,20 @@ import { handler } from '@shared/utils/error-handler'
 const port = Number(env_port_app) || 5373
 
 const init = async () => {
-  await AppDataSource.initialize()
-  await createProviders()
-  app.listen(port)
+  try {
+    await AppDataSource.initialize()
+    await createProviders()
+    app.listen(port, () => {
+      logger.info(`🚀 Server running on port ${port}`)
+    })
+  } catch (err) {
+    logger.error(
+      `❌ Error al inicializar la aplicación: ${(err as Error).message}`
+    )
+    logger.error((err as Error).stack)
 
-  logger.info(`Server running on port ${port}`)
+    process.exit(1)
+  }
 }
 
 init()
