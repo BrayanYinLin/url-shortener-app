@@ -3,7 +3,6 @@ import cookieParser from 'cookie-parser'
 import morgan from 'morgan'
 import { routerAuth } from './modules/auth/routers/auth.router'
 import { routerLink } from '@link/routers/link.router'
-import { corsOrigins, preflight } from '@shared/middlewares/cors-origins'
 import helmet from 'helmet'
 import passport from 'passport'
 import { swaggerDocs } from '@shared/docs/parse-docs'
@@ -14,7 +13,6 @@ import { routerMetric } from '@link/routers/metric.router'
 
 const app = express()
 
-app.use(corsOrigins())
 app.use(
   morgan('dev', {
     stream: {
@@ -30,7 +28,6 @@ app.use(
     contentSecurityPolicy: false
   })
 )
-app.options('*', preflight())
 
 app.use('/api/docs', swaggerUI.serve, swaggerUI.setup(swaggerDocs))
 app.use('/api/auth', routerAuth)

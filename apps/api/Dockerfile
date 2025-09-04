@@ -27,4 +27,4 @@ COPY --from=builder /usr/app/apps/api/dist ./apps/api/dist
 
 EXPOSE 5373
 
-CMD ["node", "apps/api/dist/index.js"]
+CMD ["pnpm", "dev"]
