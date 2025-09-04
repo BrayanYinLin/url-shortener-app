@@ -7,14 +7,14 @@ import {
 } from '@/components/Icons'
 import { useEffect, useState } from 'react'
 import { createPortal } from 'react-dom'
-import { Link } from 'root/types'
 import { DeleteModal } from './DeleteModal'
 import { WEBSITE } from '@/lib/definitions'
 import { EditLink } from './EditLink'
 import moment from 'moment'
 import { getExpirationWithTimezone } from '../lib/utils'
+import { LinkDto } from 'modules/links/dto/link.dto'
 
-export function LinkCard({ id, long, short, clicks, expires_at }: Link) {
+export function LinkCard({ id, long, short, clicks, expiresAt }: LinkDto) {
   const [copied, setCopied] = useState(false)
   const [removeModal, setRemoveModal] = useState(false)
   const [editModal, setEditModal] = useState<boolean>(false)
@@ -38,7 +38,7 @@ export function LinkCard({ id, long, short, clicks, expires_at }: Link) {
       {removeModal &&
         createPortal(
           <DeleteModal
-            id={id!}
+            id={id}
             short={short}
             close={() => setRemoveModal(false)}
           />,
@@ -46,7 +46,7 @@ export function LinkCard({ id, long, short, clicks, expires_at }: Link) {
         )}
       {editModal &&
         createPortal(
-          <EditLink id={id!} short={short} close={() => setEditModal(false)} />,
+          <EditLink id={id} short={short} close={() => setEditModal(false)} />,
           document.body
         )}
       <section className="flex justify-between">
@@ -91,10 +91,10 @@ export function LinkCard({ id, long, short, clicks, expires_at }: Link) {
         <p className="flex items-center text-xs">
           <ClickIcon /> {clicks} Clicks
         </p>
-        {expires_at && (
+        {expiresAt && (
           <p className="text-xs font-medium overflow-hidden whitespace-nowrap overflow-ellipsis">
             Expires after
-            {moment(getExpirationWithTimezone(expires_at)).format(
+            {moment(getExpirationWithTimezone(expiresAt)).format(
               'YYYY-MM-DD HH:mm'
             )}
           </p>

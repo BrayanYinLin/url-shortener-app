@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react'
-import { Link } from 'root/types'
 import { useLinksStore } from '../lib/stores'
+import { LinkDto } from 'modules/links/dto/link.dto'
 
 export function useFilter() {
   const { links } = useLinksStore()
-  const [linksFiltered, setLinksFiltered] = useState<Link[]>([])
+  const [linksFiltered, setLinksFiltered] = useState<LinkDto[]>([])
   const [term, setTerm] = useState<string>('')
 
   const changeTerm = ({ term }: { term: string }) => {

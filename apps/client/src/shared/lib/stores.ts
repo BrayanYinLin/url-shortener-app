@@ -1,6 +1,4 @@
 import { create } from 'zustand'
-import { Language, resource, Resource, TranslationKeys } from './i18n'
-import { findLanguagePreference } from './utils'
 import { authentication } from '@auth/services/auth.service'
 
 export type User = {
@@ -38,21 +36,4 @@ const useUserStore = create<UserState>((set) => ({
   }
 }))
 
-interface TranslationStore {
-  language: Language
-  translations: Resource
-  t: (key: TranslationKeys) => string
-  changeLanguage: (lang: Language) => void
-}
-
-const useTranslationStore = create<TranslationStore>((set, get) => ({
-  language: findLanguagePreference(),
-  translations: resource,
-  changeLanguage: (lang: Language) => {
-    set(() => ({ language: lang }))
-    localStorage.setItem('lang-preference', lang)
-  },
-  t: (key) => get().translations[get().language][key]
-}))
-
-export { useUserStore, useTranslationStore }
+export { useUserStore }

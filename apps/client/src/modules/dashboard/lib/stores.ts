@@ -1,10 +1,11 @@
-import { Link, User } from 'root/types'
+import { User } from 'root/types'
 import { create } from 'zustand'
-import { deleteLink, getUserLinks } from './services'
 import { LinkError, TokenNotRefreshed } from '@/lib/errors'
+import { LinkDto } from 'modules/links/dto/link.dto'
+import { LinkService } from 'modules/links/services/link.service'
 
 interface LinksState {
-  links: Link[]
+  links: LinkDto[]
   error: string | null
   fetchLinks: () => Promise<void>
   remove: ({ id }: Required<Pick<User, 'id'>>) => Promise<void>
@@ -16,7 +17,7 @@ export const useLinksStore = create<LinksState>((set, get) => ({
   fetchLinks: async () => {
     set({ error: null })
     try {
-      const links = await getUserLinks()
+      const links = await LinkService.findUserLinks()
 
       set({ links: links })
     } catch (e) {
@@ -30,7 +31,7 @@ export const useLinksStore = create<LinksState>((set, get) => ({
   },
   remove: async ({ id }) => {
     try {
-      await deleteLink({ id })
+      await LinkService.delete({ id })
 
       await get().fetchLinks()
     } catch (e) {

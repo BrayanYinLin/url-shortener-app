@@ -1,8 +1,8 @@
 import { FormEvent, useRef } from 'react'
-import { createLink } from '../lib/services'
 import { useLinksStore } from '../lib/stores'
 import { getExpirationWithTimezone } from '../lib/utils'
-import { CreateLinkSchema } from '../lib/link.store'
+import { LinkService } from 'modules/links/services/link.service'
+import { CreateLinkSchema } from 'modules/links/dto/link.dto'
 
 export default function LinkForm() {
   const { fetchLinks } = useLinksStore()
@@ -32,7 +32,7 @@ export default function LinkForm() {
         throw new Error(error.toString())
       }
 
-      await createLink(data)
+      await LinkService.create(data)
       await fetchLinks()
 
       shortInput.current!.value = ''

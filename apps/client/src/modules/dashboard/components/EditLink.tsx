@@ -1,8 +1,8 @@
 import { Overlay } from '@/components/Overlay'
 import { FormEvent, useRef } from 'react'
-import { editLink } from '../lib/services'
 import { Link } from 'root/types'
 import { useLinksStore } from '../lib/stores'
+import { LinkService } from 'modules/links/services/link.service'
 
 export function EditLink({
   id,
@@ -22,7 +22,7 @@ export function EditLink({
     const url = formData.get('long') as string
 
     try {
-      await editLink({ id, long: url })
+      await LinkService.edit({ id, long: url })
       await fetchLinks()
       animateClosing()
     } catch (e) {
@@ -31,10 +31,12 @@ export function EditLink({
   }
 
   const animateClosing = () => {
+    form.current?.classList.add('animate-jump-out')
+
     const timer = setTimeout(() => {
       close()
       clearTimeout(timer)
-    }, 290)
+    }, 210)
   }
 
   return (
@@ -42,7 +44,7 @@ export function EditLink({
       <form
         onSubmit={submit}
         ref={form}
-        className="bg-white w-72 xs:w-96 p-2 rounded-md flex flex-col"
+        className="animate-jump-in animate-once animate-duration-200 bg-white w-72 xs:w-96 p-2 rounded-md flex flex-col"
       >
         <h3 className="text-lg">
           Editar enlance <span className="font-semibold">/{short}</span>

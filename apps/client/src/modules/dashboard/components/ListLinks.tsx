@@ -2,9 +2,9 @@ import { Suspense, useEffect } from 'react'
 import { LinkCard } from './LinkCard'
 import { useLinksStore } from '../lib/stores'
 import { useNavigate } from 'react-router'
-import { Link } from 'root/types'
+import { LinkDto } from 'modules/links/dto/link.dto'
 export interface ListLinksProps {
-  linksFiltered: Link[]
+  linksFiltered: LinkDto[]
 }
 
 export function ListLinks({ linksFiltered }: ListLinksProps) {
@@ -23,14 +23,14 @@ export function ListLinks({ linksFiltered }: ListLinksProps) {
     <Suspense fallback={<div>Loading...</div>}>
       <section className="tablet:mx-0 md:mx-0 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-3 gap-2 pb-4">
         {(linksFiltered.length > 0 || linksFiltered) &&
-          linksFiltered.map(({ id, long, short, clicks, expires_at }) => (
+          linksFiltered.map(({ id, long, short, clicks, expiresAt }) => (
             <LinkCard
               key={id!}
               id={id!}
               long={long}
               short={short}
               clicks={clicks}
-              expires_at={expires_at}
+              expiresAt={expiresAt}
             />
           ))}
       </section>
