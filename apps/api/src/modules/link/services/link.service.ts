@@ -281,9 +281,10 @@ class LinkServiceImpl implements LinkService {
       await redisConnection.del(foundLink.short)
     }
 
+    const { affected: metricsDeleted } = await this.metricRepository.delete({ link: { id: id } })
     const { affected } = await this.linkRepository.delete({ id })
 
-    return Boolean(affected)
+    return Boolean(affected) && Boolean(metricsDeleted)
   }
 }
 
