@@ -19,11 +19,19 @@ services:
     volumes:
       - cache_data:/data
 
-  backend:
-    build: ./apps/api
-    container_name: backend
+  api:
+    build:
+      context: .
+      dockerfile: apps/api/Dockerfile
+    container_name: api
+    command: pnpm dev
+    volumes:
+      - ./apps/api:/usr/app/apps/api   # monta tu código local
+      - /usr/app/node_modules          # evita pisar node_modules del contenedor
     ports:
       - "5373:5373"
+    env_file:
+      - .env.production
   
   frontend:
     build: ./apps/client

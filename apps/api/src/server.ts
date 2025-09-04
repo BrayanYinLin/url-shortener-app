@@ -1,4 +1,4 @@
-import express from 'express'
+import express, { Request, Response } from 'express'
 import cookieParser from 'cookie-parser'
 import morgan from 'morgan'
 import { routerAuth } from './modules/auth/routers/auth.router'
@@ -33,6 +33,9 @@ app.use('/api/docs', swaggerUI.serve, swaggerUI.setup(swaggerDocs))
 app.use('/api/auth', routerAuth)
 app.use('/api/link', routerLink)
 app.use('/api/metric', routerMetric)
+app.get('/api/ping', (_: Request, res: Response) => {
+  return res.send('API Running')
+})
 app.use(errorMiddleware)
 
 export { app }
