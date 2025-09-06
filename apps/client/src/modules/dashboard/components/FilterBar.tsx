@@ -1,10 +1,12 @@
 import { useRef } from 'react'
+import { useTranslation } from 'react-i18next'
 
 type Props = {
   action: ({ term }: { term: string }) => void
 }
 
 export function FilterBar({ action }: Props) {
+  const { t } = useTranslation()
   const input = useRef<HTMLInputElement | null>(null)
 
   return (
@@ -34,7 +36,7 @@ export function FilterBar({ action }: Props) {
               clipRule="evenodd"
             />
           </svg>
-          Buscar
+          {t('search')}
         </button>
       </div>
     </div>

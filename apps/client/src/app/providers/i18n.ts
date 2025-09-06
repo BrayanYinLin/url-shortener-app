@@ -14,7 +14,10 @@ const resources = {
       continueWithGoogle: 'Continue with Google',
       continueWithGitHub: 'Continue with GitHub',
       logout: 'Logout',
-      lang: 'Language'
+      lang: 'Lang',
+      newLink: 'New Link',
+      shorten: 'Shorten',
+      search: 'Search'
     }
   },
   es: {
@@ -29,7 +32,10 @@ const resources = {
       continueWithGoogle: 'Continuar con Google',
       continueWithGitHub: 'Continuar con GitHub',
       logout: 'Cerrar sesión',
-      lang: 'Lenguaje'
+      lang: 'Len',
+      newLink: 'Nuevo enlace',
+      shorten: 'Acortar',
+      search: 'Buscar'
     }
   }
 }

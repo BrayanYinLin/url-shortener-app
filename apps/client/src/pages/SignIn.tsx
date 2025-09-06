@@ -1,4 +1,3 @@
-import { ShortYourURLIcon } from '@/components/Icons'
 import {
   GithubSignInButton,
   GoogleSignInButton
@@ -7,7 +6,11 @@ import {
 export function SignIn() {
   return (
     <main className="bg-pattern bg-repeat min-h-screen flex flex-col items-center justify-center">
-      <ShortYourURLIcon />
+      <img
+        src="/world-internet-ilustration.webp"
+        alt="world ilustration"
+        className="w-50"
+      />
       <section className="m-4 flex flex-col">
         <GoogleSignInButton />
         <GithubSignInButton />

@@ -3,9 +3,11 @@ import { useLinksStore } from '../lib/stores'
 import { getExpirationWithTimezone } from '../lib/utils'
 import { LinkService } from 'modules/links/services/link.service'
 import { CreateLinkSchema } from 'modules/links/dto/link.dto'
+import { useTranslation } from 'react-i18next'
 
 export default function LinkForm() {
   const { fetchLinks } = useLinksStore()
+  const { t } = useTranslation()
   const shortInput = useRef<HTMLInputElement | null>(null)
   const linkInput = useRef<HTMLInputElement | null>(null)
 
@@ -95,7 +97,7 @@ export default function LinkForm() {
     <>
       <section className="w-full mb-4 bg-white flex flex-col border border-shark-950/25 shadow-sm rounded-lg p-3 gap-2">
         <section className="flex justify-between">
-          <h2 className="font-bold text-lg">Nuevo enlace</h2>
+          <h2 className="font-bold text-lg">{t('newLink')}</h2>
         </section>
         <form
           onSubmit={handleSubmit}
@@ -125,7 +127,7 @@ export default function LinkForm() {
             type="submit"
             className="cursor-pointer hover:shadow-turquoise-simple transition-all duration-200 bg-turquoise-blue-500 text-white font-semibold px-4 py-2 rounded-md"
           >
-            Shorten
+            {t('shorten')}
           </button>
         </form>
       </section>

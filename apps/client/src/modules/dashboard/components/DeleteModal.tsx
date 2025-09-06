@@ -16,6 +16,7 @@ export function DeleteModal({
   const modal = useRef<HTMLElement | null>(null)
 
   const handleClose = () => {
+    modal.current?.classList.add('animate-jump-out')
     const timer = setTimeout(() => {
       close()
 
@@ -24,6 +25,7 @@ export function DeleteModal({
   }
 
   const handleDelete = (id: Required<User>['id']) => {
+    modal.current?.classList.add('animate-jump-out')
     const timer = setTimeout(() => {
       close()
       remove({ id })
@@ -34,7 +36,10 @@ export function DeleteModal({
 
   return (
     <Overlay>
-      <section className="bg-white rounded-md w-72 xs:w-96 p-2" ref={modal}>
+      <section
+        className="animate-jump-in animate-once animate-duration-200 bg-white rounded-md w-72 xs:w-96 p-2"
+        ref={modal}
+      >
         <h3 className="text-lg font-semibold">
           ¿Deseas eliminar <span className="font-bold">/{short}</span>?
         </h3>
