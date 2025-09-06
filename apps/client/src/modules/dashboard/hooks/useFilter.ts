@@ -4,7 +4,7 @@ import { LinkDto } from 'modules/links/dto/link.dto'
 
 export function useFilter() {
   const { links } = useLinksStore()
-  const [linksFiltered, setLinksFiltered] = useState<LinkDto[]>([])
+  const [result, setResult] = useState<LinkDto[]>(links)
   const [term, setTerm] = useState<string>('')
 
   const changeTerm = ({ term }: { term: string }) => {
@@ -12,24 +12,22 @@ export function useFilter() {
   }
 
   useEffect(() => {
-    setLinksFiltered(links)
-  }, [links])
-
-  useEffect(() => {
     if (term.trim() === '') {
-      setLinksFiltered(links)
+      setResult(links)
       return
     }
 
-    const regex = new RegExp(term)
+    const filter = setTimeout(() => {
+      const regex = new RegExp(term)
+      const linksFiltered = links.filter(
+        (link) => regex.test(link.short) || regex.test(link.long)
+      )
 
-    const filtered = linksFiltered.filter(
-      ({ long, short }) =>
-        regex.test(long.toLowerCase()) || regex.test(short.toLowerCase())
-    )
+      setResult(linksFiltered)
+    }, 1000)
 
-    setLinksFiltered(filtered)
-  }, [term])
+    return () => clearTimeout(filter)
+  }, [term, links])
 
-  return { changeTerm, linksFiltered }
+  return { changeTerm, result }
 }

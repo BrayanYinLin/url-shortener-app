@@ -13,7 +13,9 @@ export function FilterBar({ action }: Props) {
         <input
           className="w-full bg-transparent placeholder:text-slate-400 text-slate-700 text-sm border border-shark-950/25 rounded-md pl-3 pr-28 py-2 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow"
           name="filter"
+          ref={input}
           placeholder="Enlace e.g. /mi-enlace"
+          onChange={() => action({ term: input.current?.value || '' })}
         />
         <button
           className="cursor-pointer  absolute top-1 right-1 flex items-center rounded bg-turquoise-blue-500 py-1 px-2.5 border border-transparent text-center text-sm text-white transition-all shadow-sm hover:shadow focus:bg-turquoise-blue-400 focus:shadow-none active:bg-turquoise-blue-400 hover:bg-turquoise-blue-400 active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"

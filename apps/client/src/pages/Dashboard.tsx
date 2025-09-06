@@ -8,7 +8,7 @@ import { FilterBar } from '../modules/dashboard/components/FilterBar'
 
 export function Dashboard() {
   const { user } = useUser()
-  const { changeTerm, linksFiltered } = useFilter()
+  const { changeTerm, result } = useFilter()
 
   useEffect(() => {
     document.title = 'Quick Shortener | Dashboard'
@@ -22,7 +22,7 @@ export function Dashboard() {
         <div className="w-full flex flex-col">
           <LinkForm />
         </div>
-        <ListLinks linksFiltered={linksFiltered} />
+        <ListLinks linksFiltered={result} />
       </section>
     </main>
   )
