@@ -4,7 +4,7 @@
 export const ENDPOINTS = {
   AUTH: '/api/auth/',
   LINK: '/api/link/'
-}
+} as const
 
 // El origen del sitio web se puede determinar dinámicamente donde sea necesario,
 // pero ya no se requiere para las llamadas a la API.

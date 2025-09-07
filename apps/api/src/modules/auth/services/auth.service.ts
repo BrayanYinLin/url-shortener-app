@@ -17,11 +17,20 @@ class AuthService {
   ) {}
 
   async auth({ access_token }: AccessToken): Promise<User> {
-    const recovered = (await decode(access_token)) as User
+    const { sub } = await decode(access_token)
+
+    if (!sub) {
+      throw new AppError({
+        code: ERROR_NAMES.AUTHENTICATION,
+        httpCode: ERROR_HTTP_CODES.AUTHENTICATION,
+        message: 'Subject not found in jwt',
+        isOperational: true
+      })
+    }
 
     const user = await this.userRepository.findOne({
       where: {
-        id: recovered.id
+        id: sub
       },
       relations: ['provider']
     })

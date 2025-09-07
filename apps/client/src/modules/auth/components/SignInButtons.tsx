@@ -23,7 +23,7 @@ export const GoogleSignInButton = () => {
 export const GithubSignInButton = () => {
   const { t } = useTranslation()
   const handleGithubSignIn = async () => {
-    window.location.href = 'http://localhost:5173/api/auth/github'
+    window.location.href = `${ENDPOINTS.AUTH}github`
   }
 
   return (

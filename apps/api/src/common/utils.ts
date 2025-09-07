@@ -32,10 +32,7 @@ export const setCookiesSettings = (): CookieSettings => {
   const access_settings: CookieOptions = {
     httpOnly: true,
     maxAge: TWO_HOURS,
-    domain:
-      env_node === 'PRODUCTION'
-        ? 'cool-shortener-production.up.railway.app'
-        : 'localhost',
+    domain: 'localhost',
     secure: env_node === 'PRODUCTION',
     sameSite: env_node === 'PRODUCTION' ? 'none' : 'lax',
     path: '/'
@@ -44,10 +41,7 @@ export const setCookiesSettings = (): CookieSettings => {
   const refresh_settings: CookieOptions = {
     httpOnly: true,
     maxAge: FITHTEEN_DAYS_SECONDS,
-    domain:
-      env_node === 'PRODUCTION'
-        ? 'cool-shortener-production.up.railway.app'
-        : 'localhost',
+    domain: 'localhost',
     secure: env_node === 'PRODUCTION',
     sameSite: env_node === 'PRODUCTION' ? 'none' : 'lax',
     path: '/'
@@ -59,12 +53,8 @@ export const setCookiesSettings = (): CookieSettings => {
 export const getClearCookiesSettings = () => {
   const settings: CookieOptions = {
     httpOnly: true,
+    domain: 'localhost',
     secure: env_node === 'PRODUCTION',
-    // expires: new Date(0),
-    domain:
-      env_node === 'PRODUCTION'
-        ? 'cool-shortener-production.up.railway.app'
-        : 'localhost',
     sameSite: env_node === 'PRODUCTION' ? 'none' : 'lax',
     path: '/'
   }

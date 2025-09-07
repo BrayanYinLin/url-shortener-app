@@ -7,6 +7,7 @@ import { AuthService } from '../services/auth.service'
 import { AppError } from '@shared/utils/error-factory'
 import { ERROR_HTTP_CODES, ERROR_NAMES } from '@shared/config/constants'
 import { setAuthCookies } from '../lib/auth-cookies'
+import logger from '@shared/utils/logger'
 
 class AuthCtrl {
   constructor(private readonly service = new AuthService()) {}
@@ -16,6 +17,7 @@ class AuthCtrl {
       const access_token = req.cookies.access_token
       const user = await this.service.auth({ access_token })
 
+      logger.info(JSON.stringify(user))
       return res.json(user)
     } catch (e) {
       next(e)
