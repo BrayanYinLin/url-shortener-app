@@ -9,12 +9,12 @@ export type PopoverProps = {
 export function Popover({ trigger, children }: PopoverProps) {
   return (
     <Root>
-      <Trigger>{trigger}</Trigger>
+      <Trigger asChild>{trigger}</Trigger>
       <Portal>
         <Content
           side="top"
           sideOffset={10}
-          className="border border-slate-300 shadow-sm rounded-md p-2 focus:outline-none flex flex-col"
+          className="bg-white border border-slate-300 shadow-sm rounded-md p-2 focus:outline-none flex flex-col"
         >
           {children}
         </Content>

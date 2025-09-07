@@ -7,7 +7,7 @@ export const DeleteLinkSchema = z.object({
 export const CreateLinkSchema = z.object({
   long: z.string().url('Debe ser una URL válida'),
   short: z.string().min(3, 'El short debe tener al menos 3 caracteres'),
-  expiresAt: z.string().datetime().nullable().optional()
+  expiresAt: z.string().datetime({ offset: true }).nullable().optional()
 })
 
 export const UpdateLinkSchema = z.object({

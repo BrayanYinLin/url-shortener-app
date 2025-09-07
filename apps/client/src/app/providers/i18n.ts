@@ -1,3 +1,4 @@
+import { findLanguagePreference } from '@/lib/utils'
 import i18n from 'i18next'
 import { initReactI18next } from 'react-i18next'
 
@@ -17,7 +18,8 @@ const resources = {
       lang: 'Lang',
       newLink: 'New Link',
       shorten: 'Shorten',
-      search: 'Search'
+      search: 'Search',
+      expires: 'Expires after'
     }
   },
   es: {
@@ -35,14 +37,15 @@ const resources = {
       lang: 'Len',
       newLink: 'Nuevo enlace',
       shorten: 'Acortar',
-      search: 'Buscar'
+      search: 'Buscar',
+      expires: 'Vence el'
     }
   }
 }
 
 i18n.use(initReactI18next).init({
   resources,
-  lng: 'en',
+  lng: findLanguagePreference(),
   interpolation: {
     escapeValue: false
   }

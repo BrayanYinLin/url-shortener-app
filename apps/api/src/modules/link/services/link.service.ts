@@ -114,7 +114,7 @@ class LinkServiceImpl implements LinkService {
     const link = this.linkRepository.create({
       long: data.long,
       short: data.short,
-      expiresAt: data.expiresAt,
+      expiresAt: data.expiresAt ? new Date(data.expiresAt) : null,
       user: user
     })
 

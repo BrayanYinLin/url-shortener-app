@@ -13,8 +13,10 @@ import { EditLink } from './EditLink'
 import moment from 'moment'
 import { getExpirationWithTimezone } from '../lib/utils'
 import { LinkDto } from 'modules/links/dto/link.dto'
+import { useTranslation } from 'react-i18next'
 
 export function LinkCard({ id, long, short, clicks, expiresAt }: LinkDto) {
+  const { t } = useTranslation()
   const [copied, setCopied] = useState(false)
   const [removeModal, setRemoveModal] = useState(false)
   const [editModal, setEditModal] = useState<boolean>(false)
@@ -93,7 +95,7 @@ export function LinkCard({ id, long, short, clicks, expiresAt }: LinkDto) {
         </p>
         {expiresAt && (
           <p className="text-xs font-medium overflow-hidden whitespace-nowrap overflow-ellipsis">
-            Expires after
+            {t('expires').concat(' ')}
             {moment(getExpirationWithTimezone(expiresAt)).format(
               'YYYY-MM-DD HH:mm'
             )}

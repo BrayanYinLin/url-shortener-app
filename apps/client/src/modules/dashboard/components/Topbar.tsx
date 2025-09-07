@@ -1,16 +1,16 @@
-import { LanguageIcon, LogoutIcon } from '@/components/Icons'
+import { Popover } from '@/components/Popover'
 import { Avatar } from './Avatar'
+import { LanguageIcon, LogoutIcon } from '@/components/Icons'
+import { useTranslation } from 'react-i18next'
 import { logout } from '@auth/services/logout.service'
 import { useNavigate } from 'react-router'
-import { useTranslation } from 'react-i18next'
-import { Popover } from '@/components/Popover'
 
-export interface SidebarProps {
+export interface TopbarProps {
   name?: string
   avatar?: string
 }
 
-export function Sidebar({ avatar, name }: SidebarProps) {
+export function Topbar({ name, avatar }: TopbarProps) {
   const { i18n } = useTranslation()
   const navigate = useNavigate()
 
@@ -29,14 +29,15 @@ export function Sidebar({ avatar, name }: SidebarProps) {
   }
 
   return (
-    <div className="hidden lg:flex relative h-full w-full max-w-[16rem] flex-col justify-between bg-white bg-clip-border p-4 text-gray-700 shadow-xl shadow-blue-gray-900/5">
-      <div className="flex flex-col items-center p-4 mb-2">
-        <Avatar url={avatar} name={name} size={65} />
-        <h5 className="inline-block text-center font-sans text-xl antialiased font-bold leading-snug tracking-normal text-turquoise-blue-800">
-          {name}'s <br /> Dashboard
-        </h5>
+    <header className="lg:hidden flex justify-between">
+      <div className="flex gap-4 items-center">
+        <Avatar url={avatar} name={name} size={40} />
+        <h3 className="text-xl font-bold text-turquoise-blue-950">
+          {name}'s dashboard
+        </h3>
       </div>
-      <nav className="mx-auto flex gap-5 font-sans text-base font-normal text-blue-gray-700">
+
+      <nav className="flex gap-2 font-sans text-base font-normal text-blue-gray-700">
         <Popover
           trigger={
             <button className="cursor-pointer max-w-[180px] flex justify-center items-center w-full px-3 py-1 border border-slate-300 shadow-sm rounded-md p-2 focus:outline-none">
@@ -66,6 +67,6 @@ export function Sidebar({ avatar, name }: SidebarProps) {
           <LogoutIcon />
         </button>
       </nav>
-    </div>
+    </header>
   )
 }

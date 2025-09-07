@@ -1,87 +1,3 @@
-export const ShortYourURLIcon = () => {
-  return (
-    <svg
-      width="100"
-      height="100"
-      viewBox="0 0 100 100"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <rect width="100" height="100" rx="5" fill="#222222" />
-      <path
-        d="M25 36.1111C25 38.3212 25.878 40.4409 27.4408 42.0037C29.0036 43.5665 31.1232 44.4444 33.3333 44.4444C35.5435 44.4444 37.6631 43.5665 39.2259 42.0037C40.7887 40.4409 41.6667 38.3212 41.6667 36.1111C41.6667 33.901 40.7887 31.7814 39.2259 30.2185C37.6631 28.6557 35.5435 27.7778 33.3333 27.7778C31.1232 27.7778 29.0036 28.6557 27.4408 30.2185C25.878 31.7814 25 33.901 25 36.1111Z"
-        stroke="white"
-        strokeWidth="4"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-      <path
-        d="M25 63.8889C25 66.099 25.878 68.2186 27.4408 69.7814C29.0036 71.3442 31.1232 72.2222 33.3333 72.2222C35.5435 72.2222 37.6631 71.3442 39.2259 69.7814C40.7887 68.2186 41.6667 66.099 41.6667 63.8889C41.6667 61.6787 40.7887 59.5591 39.2259 57.9963C37.6631 56.4335 35.5435 55.5555 33.3333 55.5555C31.1232 55.5555 29.0036 56.4335 27.4408 57.9963C25.878 59.5591 25 61.6787 25 63.8889Z"
-        stroke="white"
-        strokeWidth="4"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-      <path
-        d="M40.5557 40.5555L69.4446 69.4444"
-        stroke="white"
-        strokeWidth="4"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-      <path
-        d="M40.5557 59.4444L69.4446 30.5555"
-        stroke="white"
-        strokeWidth="4"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
-  )
-}
-
-export const MiniShortYourURLIcon = () => {
-  return (
-    <svg
-      width="30"
-      height="30"
-      viewBox="0 0 30 30"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <rect width="30" height="30" rx="5" fill="#222222" />
-      <path
-        d="M7.5 10.8333C7.5 11.4964 7.76339 12.1323 8.23223 12.6011C8.70107 13.0699 9.33696 13.3333 10 13.3333C10.663 13.3333 11.2989 13.0699 11.7678 12.6011C12.2366 12.1323 12.5 11.4964 12.5 10.8333C12.5 10.1703 12.2366 9.53441 11.7678 9.06557C11.2989 8.59673 10.663 8.33333 10 8.33333C9.33696 8.33333 8.70107 8.59673 8.23223 9.06557C7.76339 9.53441 7.5 10.1703 7.5 10.8333Z"
-        stroke="white"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-      <path
-        d="M7.5 19.1667C7.5 19.8297 7.76339 20.4656 8.23223 20.9344C8.70107 21.4033 9.33696 21.6667 10 21.6667C10.663 21.6667 11.2989 21.4033 11.7678 20.9344C12.2366 20.4656 12.5 19.8297 12.5 19.1667C12.5 18.5036 12.2366 17.8677 11.7678 17.3989C11.2989 16.9301 10.663 16.6667 10 16.6667C9.33696 16.6667 8.70107 16.9301 8.23223 17.3989C7.76339 17.8677 7.5 18.5036 7.5 19.1667Z"
-        stroke="white"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-      <path
-        d="M12.1667 12.1667L20.8333 20.8333"
-        stroke="white"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-      <path
-        d="M12.1667 17.8333L20.8333 9.16667"
-        stroke="white"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
-  )
-}
-
 export const GitHubIcon = () => {
   return (
     <svg
@@ -144,86 +60,6 @@ export const LinkedInIcon = () => {
   )
 }
 
-export const LinkIcon = () => {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width={24}
-      height={24}
-      fill="none"
-      stroke="currentColor"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      strokeWidth={2}
-      className="icon icon-tabler icons-tabler-outline icon-tabler-link"
-    >
-      <path stroke="none" d="M0 0h24v24H0z" />
-      <path d="m9 15 6-6M11 6l.463-.536a5 5 0 0 1 7.071 7.072L18 13M13 18l-.397.534a5.068 5.068 0 0 1-7.127 0 4.972 4.972 0 0 1 0-7.071L6 11" />
-    </svg>
-  )
-}
-
-export const ArrowCornerIcon = () => {
-  return (
-    <svg
-      width="10"
-      height="10"
-      viewBox="0 0 10 10"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <path
-        d="M8.33329 1.66669L1.66663 8.33335"
-        stroke="#222222"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-      <path
-        d="M2.33337 1.66669H8.33337V7.66669"
-        stroke="#222222"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
-  )
-}
-
-export const MagnifiyingGlassIcon = () => {
-  return (
-    <svg
-      width="30"
-      height="30"
-      viewBox="0 0 30 30"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <g clipPath="url(#clip0_2_25)">
-        <path
-          d="M3.75 12.5C3.75 13.6491 3.97633 14.7869 4.41605 15.8485C4.85578 16.9101 5.5003 17.8747 6.31282 18.6872C7.12533 19.4997 8.08992 20.1442 9.15152 20.5839C10.2131 21.0237 11.3509 21.25 12.5 21.25C13.6491 21.25 14.7869 21.0237 15.8485 20.5839C16.9101 20.1442 17.8747 19.4997 18.6872 18.6872C19.4997 17.8747 20.1442 16.9101 20.5839 15.8485C21.0237 14.7869 21.25 13.6491 21.25 12.5C21.25 11.3509 21.0237 10.2131 20.5839 9.15152C20.1442 8.08992 19.4997 7.12533 18.6872 6.31282C17.8747 5.5003 16.9101 4.85578 15.8485 4.41605C14.7869 3.97633 13.6491 3.75 12.5 3.75C11.3509 3.75 10.2131 3.97633 9.15152 4.41605C8.08992 4.85578 7.12533 5.5003 6.31282 6.31282C5.5003 7.12533 4.85578 8.08992 4.41605 9.15152C3.97633 10.2131 3.75 11.3509 3.75 12.5Z"
-          stroke="black"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
-        <path
-          d="M26.25 26.25L18.75 18.75"
-          stroke="black"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
-      </g>
-      <defs>
-        <clipPath id="clip0_2_25">
-          <rect width="30" height="30" fill="white" />
-        </clipPath>
-      </defs>
-    </svg>
-  )
-}
-
 export const GhostIcon = () => {
   return (
     <svg
@@ -240,34 +76,6 @@ export const GhostIcon = () => {
       <path stroke="none" d="M0 0h24v24H0z" />
       <path d="M10 9h.01M14 9h.01M12 3a7 7 0 0 1 7 7v1h1a2 2 0 1 1 0 4h-1v3l2 3H11a6 6 0 0 1-6-5.775v-.226H4a2 2 0 0 1 0-4h1v-1a7 7 0 0 1 7-7z" />
       <path d="M11 14h2a1 1 0 0 0-2 0z" />
-    </svg>
-  )
-}
-
-export const FireIcon = () => {
-  return (
-    <svg
-      width="40"
-      height="40"
-      viewBox="0 0 40 40"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      className="animate-bounce"
-    >
-      <g clipPath="url(#clip0_55_149)">
-        <path
-          d="M19.9999 18.235C23.8883 12.7216 20.2783 5.19665 18.3333 3.33331C18.3333 8.99165 14.6083 12.165 12.2216 14.51C9.83825 16.8566 8.33325 20.545 8.33325 23.8233C8.33325 29.9966 13.5566 35 19.9999 35C26.4433 35 31.6666 29.9966 31.6666 23.8233C31.6666 20.97 29.6133 16.485 27.7783 14.51C24.3049 20.0983 22.3499 20.0983 19.9999 18.235Z"
-          stroke="black"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
-      </g>
-      <defs>
-        <clipPath id="clip0_55_149">
-          <rect width="40" height="40" fill="white" />
-        </clipPath>
-      </defs>
     </svg>
   )
 }
@@ -353,25 +161,6 @@ export const ClickIcon = () => {
   )
 }
 
-export const CloseIcon = () => {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width={24}
-      height={24}
-      fill="none"
-      stroke="currentColor"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      strokeWidth={2}
-      className="icon icon-tabler icons-tabler-outline icon-tabler-x"
-    >
-      <path stroke="none" d="M0 0h24v24H0z" />
-      <path d="M18 6 6 18M6 6l12 12" />
-    </svg>
-  )
-}
-
 export const SettingsIcon = () => {
   return (
     <svg
@@ -449,62 +238,52 @@ export const CopiedSuccessfullyIcon = () => {
   )
 }
 
-export const RedirectingIcon = () => {
+export const TimerModeIcon = () => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      width={24}
-      height={24}
-      fill="none"
-      stroke="currentColor"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      strokeWidth={2}
-      className="icon icon-tabler icons-tabler-outline icon-tabler-directions"
-    >
-      <path stroke="none" d="M0 0h24v24H0z" />
-      <path d="M12 21v-4M12 13V9M12 5V3M10 21h4M8 5v4h11l2-2-2-2zM14 13v4H6l-2-2 2-2z" />
-    </svg>
-  )
-}
-
-export const TimerIcon = () => {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width={24}
-      height={24}
-      fill="none"
-      stroke="currentColor"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      strokeWidth={1}
-      className="icon icon-tabler icons-tabler-outline icon-tabler-clock-hour-10"
-    >
-      <path stroke="none" d="M0 0h24v24H0z" />
-      <path d="M3 12a9 9 0 1 0 18 0 9 9 0 1 0-18 0M12 12l-3-2M12 7v5" />
-    </svg>
-  )
-}
-
-export const DashboardIcon = () => {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width={24}
-      height={24}
+      width={20}
+      height={20}
       viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
-      strokeWidth={2}
+      strokeWidth={1}
       strokeLinecap="round"
       strokeLinejoin="round"
-      className="icon icon-tabler icons-tabler-outline icon-tabler-dashboard"
+      className="icon icon-tabler icons-tabler-outline icon-tabler-timezone stroke-white"
     >
       <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-      <path d="M12 13m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
-      <path d="M13.45 11.55l2.05 -2.05" />
-      <path d="M6.4 20a9 9 0 1 1 11.2 0z" />
+      <path d="M20.884 10.554a9 9 0 1 0 -10.337 10.328" />
+      <path d="M3.6 9h16.8" />
+      <path d="M3.6 15h6.9" />
+      <path d="M11.5 3a17 17 0 0 0 -1.502 14.954" />
+      <path d="M12.5 3a17 17 0 0 1 2.52 7.603" />
+      <path d="M18 18m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0" />
+      <path d="M18 16.5v1.5l.5 .5" />
+    </svg>
+  )
+}
+
+export const ClassicModeIcon = () => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width={20}
+      height={20}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={1}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className="icon icon-tabler icons-tabler-outline icon-tabler-world stroke-white"
+    >
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0" />
+      <path d="M3.6 9h16.8" />
+      <path d="M3.6 15h16.8" />
+      <path d="M11.5 3a17 17 0 0 0 0 18" />
+      <path d="M12.5 3a17 17 0 0 1 0 18" />
     </svg>
   )
 }
