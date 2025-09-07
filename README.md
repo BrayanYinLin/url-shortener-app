@@ -1,156 +1,113 @@
-# Acortador de URLs Monorepo 🚀
+# URL Shortener ✂️
 
-Este es un monorepo para una aplicación de acortador de URLs, compuesto por un frontend en React y un backend en Node.js.
+¡Un acortador de URLs simple y potente! Este monorepo contiene todo lo que necesitas para acortar, gestionar y compartir tus enlaces de una manera más sencilla.
 
-## Características ✨
+## ✨ Características
 
-- **Acortamiento de URLs:** Convierte URLs largas en enlaces cortos y fáciles de compartir.
-- **Autenticación de Usuarios:** Inicia sesión con tu cuenta de Google o GitHub.
-- **Gestión de Enlaces:** Visualiza, edita y elimina tus enlaces acortados.
-- **Redirección Rápida:** Redirección eficiente de enlaces cortos a las URLs originales.
-- **Diseño Responsivo:** Interfaz de usuario amigable y adaptable a cualquier dispositivo.
+- **🔗 Acorta URLs:** Transforma enlaces largos en URLs cortas y manejables.
+- **🔐 Autenticación:** Inicia sesión con tu cuenta de Google o GitHub.
+- **📊 Dashboard:** Administra tus enlaces: visualiza, edita y elimina.
+- **🚀 Redirección Rápida:** Redirecciones eficientes para una experiencia de usuario fluida.
+- **📱 Diseño Responsivo:** Interfaz adaptable a cualquier tamaño de pantalla.
 
-## Tecnologías Utilizadas 🛠️
+## 📸 Capturas de Pantalla
 
-- **Frontend:**
-  - React
-  - Vite
-  - TypeScript
-  - Tailwind CSS
-  - Zustand (para el manejo de estado)
-- **Backend:**
-  - Node.js
-  - Express
-  - TypeScript
-  - TypeORM
-- **Base de Datos:**
-  - PostgreSQL
-- **Autenticación:**
-  - Passport.js (con estrategias para Google y GitHub)
-  - JSON Web Tokens (JWT)
-- **Gestor de Paquetes:**
-  - pnpm
-- **Contenerización:**
-  - Docker
+|              Página Principal               |                 Dashboard de Usuario                 |
+| :-----------------------------------------: | :--------------------------------------------------: |
+| ![Página Principal](apps/docs/homepage.jpg) |        ![Dashboard](apps/docs/dashboard.jpg)         |
+|     _Vista principal de la aplicación._     | _Panel de control para gestionar todos tus enlaces._ |
 
-## Estructura del Proyecto 📁
+|                Edición de Enlace                 |                 Diseño Responsivo                 |
+| :----------------------------------------------: | :-----------------------------------------------: |
+|  ![Edición de Enlace](apps/docs/edit-link.jpg)   |  ![Diseño Responsivo](apps/docs/responsive.jpg)   |
+| _Modal para editar la información de un enlace._ | _Vista de la aplicación en un dispositivo móvil._ |
 
-El proyecto está organizado como un monorepo utilizando pnpm workspaces:
+## 🛠️ Tech Stack
 
-- `apps/api`: Contiene el código del backend (servidor de Node.js).
-- `apps/client`: Contiene el código del frontend (aplicación de React).
+| Área              | Tecnología                                     |
+| :---------------- | :--------------------------------------------- |
+| **Frontend**      | React, Vite, TypeScript, Tailwind CSS, Zustand |
+| **Backend**       | Node.js, Express, TypeScript, TypeORM          |
+| **Base de Datos** | PostgreSQL, Redis                              |
+| **Auth**          | Passport.js (Google & GitHub), JWT             |
+| **Varios**        | pnpm Workspaces, Docker, Nginx                 |
 
-## Prerrequisitos 📋
+## 📂 Estructura del Proyecto
 
-Antes de comenzar, asegúrate de tener instalado lo siguiente:
+Este proyecto es un monorepo gestionado con `pnpm` y está organizado de la siguiente manera:
 
-- [Node.js](https://nodejs.org/) (versión 20 o superior)
+- `apps/api`: El backend de la aplicación (Node.js/Express).
+- `apps/client`: El frontend de la aplicación (React/Vite).
+
+## 🚀 Empezando
+
+Para levantar el proyecto localmente, sigue estos pasos.
+
+### Prerrequisitos
+
+- [Node.js](https://nodejs.org/) (v20+)
 - [pnpm](https://pnpm.io/installation)
 - [Docker](https://www.docker.com/get-started)
 
-## Primeros Pasos 🏁
+### Pasos de Instalación
 
-1.  **Clonar el repositorio:**
+1.  **Clona el repositorio:**
 
     ```bash
     git clone https://github.com/tu-usuario/url-shortener-app.git
     cd url-shortener-app
     ```
 
-2.  **Instalar dependencias:**
-
-    Utiliza `pnpm` para instalar todas las dependencias del monorepo.
+2.  **Instala las dependencias:**
 
     ```bash
     pnpm install
     ```
 
-## Configuración de la Base de Datos 💾
+3.  **Configura las variables de entorno:**
+    Crea un archivo `.env` en la raíz del proyecto y añade las variables necesarias. Puedes usar el siguiente ejemplo como base:
 
-La aplicación utiliza una base de datos PostgreSQL que puede ser levantada fácilmente con Docker Compose.
+    ```env
+    # API
+    PORT=5373
+    API_BASE=http://localhost:5373
 
-1.  **Iniciar el contenedor de la base de datos:**
+    # Base de Datos
+    POSTGRES_HOST=localhost
+    POSTGRES_DATABASE=db_shortener
+    POSTGRES_USER=admin
+    POSTGRES_PASSWORD=mysecretpassword
 
-    ```bash
-    docker-compose up -d
+    # Auth
+    JWT_SECRET=supersecretjwtkey
+
+    # Google OAuth
+    GOOGLE_CLIENT=your_google_client_id
+    GOOGLE_SECRET=your_google_client_secret
+    GOOGLE_CALLBACK=http://localhost:5373/api/auth/google/callback
+
+    # GitHub OAuth
+    GITHUB_CLIENT=your_github_client_id
+    GITHUB_SECRET=your_github_client_secret
     ```
 
-    Esto iniciará un contenedor de PostgreSQL en el puerto `5273`.
+4.  **Inicia la base de datos:**
+    ```bash
+    docker compose up -d
+    ```
 
-## Variables de Entorno 🔑
+## 📜 Scripts Disponibles
 
-Crea un archivo `.env` en la raíz del proyecto y añade las siguientes variables de entorno:
+| Comando                 | Descripción                                    |
+| :---------------------- | :--------------------------------------------- |
+| `pnpm dev:client`       | Inicia el servidor de desarrollo del cliente.  |
+| `pnpm dev:api`          | Inicia el servidor de desarrollo de la API.    |
+| `pnpm dev:api:worker`   | Inicia el worker de la API en modo desarrollo. |
+| `pnpm start:api`        | Inicia la API en modo producción.              |
+| `pnpm start:api:worker` | Inicia el worker de la API en modo producción. |
+| `pnpm build`            | Compila ambos proyectos para producción.       |
+| `pnpm test:api`         | Ejecuta los tests de la API.                   |
 
-```env
-# API Configuration
-PORT=5373
-API_BASE=http://localhost:5373
+## 📖 Documentación de la API
 
-# Database
-POSTGRES_HOST=localhost
-POSTGRES_DATABASE=db_shortener
-POSTGRES_USER=admin
-POSTGRES_PASSWORD=your_postgres_password
-
-# Authentication
-JWT_SECRET=your_jwt_secret
-
-# Google OAuth
-GOOGLE_CLIENT=your_google_client_id
-GOOGLE_SECRET=your_google_client_secret
-GOOGLE_CALLBACK=http://localhost:5373/api/auth/google/callback
-
-# GitHub OAuth
-GITHUB_CLIENT=your_github_client_id
-GITHUB_SECRET=your_github_client_secret
-```
-
-**Nota:** Para obtener las credenciales de OAuth, deberás crear una aplicación en [Google Cloud Console](https://console.cloud.google.com/) y en [GitHub Developer Settings](https://github.com/settings/developers).
-
-## Ejecutando la Aplicación 🚀
-
-Puedes ejecutar el frontend y el backend por separado en modo de desarrollo.
-
-- **Para iniciar el servidor de desarrollo del frontend:**
-
-  ```bash
-  pnpm --filter client run dev
-  ```
-
-- **Para iniciar el servidor de desarrollo del backend:**
-
-  ```bash
-  pnpm --filter api run dev
-  ```
-
-## Build para Producción 🏗️
-
-Para compilar tanto el frontend como el backend para producción, puedes usar el siguiente comando:
-
-```bash
-pnpm build
-```
-
-Este comando ejecutará los scripts de build de ambos paquetes (`api` y `client`).
-
-## Ejecutando Pruebas 🧪
-
-- **Para ejecutar las pruebas de la API:**
-
-  ```bash
-  pnpm --filter api run test
-  ```
-
-- **Para ejecutar las pruebas del cliente:**
-
-  ```bash
-  pnpm --filter client run test
-  ```
-
-## Documentación de la API 📖
-
-La documentación de la API está disponible en el archivo `apps/api/src/shared/docs/openapi.yml`. Este archivo sigue la especificación OpenAPI 3.0 y detalla todos los endpoints disponibles, sus parámetros y las respuestas esperadas.
-
-## Licencia 📄
-
-Este proyecto está bajo la Licencia MIT. Consulta el archivo `LICENSE` para más detalles.
+La documentación de la API sigue la especificación OpenAPI 3.0 y se encuentra en `apps/api/src/shared/docs/openapi.yml`.
