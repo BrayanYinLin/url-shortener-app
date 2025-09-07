@@ -33,10 +33,8 @@ export default function LinkForm() {
       const { data, error } = CreateLinkSchema.safeParse({
         short: short,
         long: long,
-        expiresAt: iso
+        expiresAt: expirationMode ? iso : null
       })
-
-      console.log(iso)
 
       if (!data) {
         throw new Error(error.toString())
