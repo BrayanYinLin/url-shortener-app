@@ -5,9 +5,7 @@ import { useTranslation } from 'react-i18next'
 export const GoogleSignInButton = () => {
   const { t } = useTranslation()
   const handleSignIn = async () => {
-    await fetch(`${ENDPOINTS.AUTH}google`)
-    // const { link } = await response.json()
-    // window.location.href = link
+    window.location.href = `${ENDPOINTS.AUTH}google`
   }
 
   return (
@@ -25,7 +23,7 @@ export const GoogleSignInButton = () => {
 export const GithubSignInButton = () => {
   const { t } = useTranslation()
   const handleGithubSignIn = async () => {
-    window.location.href = 'http://localhost:5373/api/auth/github'
+    window.location.href = 'http://localhost:5173/api/auth/github'
   }
 
   return (

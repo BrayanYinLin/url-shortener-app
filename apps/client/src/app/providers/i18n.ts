@@ -6,7 +6,7 @@ const resources = {
   en: {
     translation: {
       catchPhrase:
-        'Simplify your <span class="text-turquoise-blue-600">links</span>.<br/> Expand your <span class="text-turquoise-blue-600">reach</span>.',
+        'Simplify your <span className="text-turquoise-blue-600">links</span>.<br/> Expand your <span className="text-turquoise-blue-600">reach</span>.',
       signin: 'Sign in',
       productDescription:
         'Shorten your links quickly and securely. Share, manage, and analyze with a simple yet powerful tool.',
@@ -25,7 +25,7 @@ const resources = {
   es: {
     translation: {
       catchPhrase:
-        'Simplifica tus <span class="text-turquoise-blue-600">enlaces</span>.<br/> Amplía tu <span class="text-turquoise-blue-600">alcance</span>.',
+        'Simplifica tus <span className="text-turquoise-blue-600">enlaces</span>.<br/> Amplía tu <span className="text-turquoise-blue-600">alcance</span>.',
       signin: 'Iniciar sesión',
       productDescription:
         'Acorta tus enlaces de forma rápida y segura. Comparte, gestiona y analiza con una herramienta sencilla pero potente.',

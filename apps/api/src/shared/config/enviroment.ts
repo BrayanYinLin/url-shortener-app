@@ -5,7 +5,7 @@
 
 const {
   PORT: env_port_app,
-  API_BASE: env_api_base = 'http://localhost:5373',
+  API_BASE: env_api_base = 'http://localhost:5173',
   GITHUB_CLIENT: env_github_client,
   GITHUB_SECRET: env_github_secret,
   GOOGLE_CLIENT: env_google_client,

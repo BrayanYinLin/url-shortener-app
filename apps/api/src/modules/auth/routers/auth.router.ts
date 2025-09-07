@@ -36,11 +36,19 @@ const createAuthRouter = () => {
 
   routerAuth.get(
     '/google',
-    passport.authenticate('google', { scope: ['profile', 'email'] })
+    passport.authenticate('google', {
+      scope: ['profile', 'email'],
+      failureRedirect:
+        'http://localhost:5173/signin?error=google_autenticacion_problem'
+    })
   )
   routerAuth.get(
     '/google/callback',
-    passport.authenticate('google', { session: false }),
+    passport.authenticate('google', {
+      session: false,
+      failureRedirect:
+        'http://localhost:5173/signin?error=google_autenticacion_problem'
+    }),
     controller.callbackGoogle.bind(controller)
   )
 

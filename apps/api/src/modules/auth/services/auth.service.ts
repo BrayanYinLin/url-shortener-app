@@ -197,12 +197,14 @@ class AuthService {
       })
     }
 
+    const avatar = profile.photos ? profile.photos[0].value : ''
     let userRecord = existingUser
     if (!existingUser) {
       userRecord = await userRepository.save({
         name: profile.displayName,
         email: profile.emails[0].value,
-        provider: googleProvider
+        provider: googleProvider,
+        avatar: avatar
       })
     }
 
