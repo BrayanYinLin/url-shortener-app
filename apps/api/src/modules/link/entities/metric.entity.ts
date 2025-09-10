@@ -1,4 +1,10 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm'
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  PrimaryGeneratedColumn
+} from 'typeorm'
 import { Link } from './link.entity'
 
 @Entity()
@@ -7,6 +13,7 @@ class Metric {
   id!: string
 
   @ManyToOne(() => Link, (link) => link.metrics)
+  @JoinColumn({ name: 'link_id' })
   link!: Link
 
   @Column({ type: 'varchar', nullable: true })

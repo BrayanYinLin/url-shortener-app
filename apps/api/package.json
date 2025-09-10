@@ -5,8 +5,10 @@
   "scripts": {
     "dev": "tsx --env-file=../../.env.development --watch src/index.ts",
     "dev:worker": "tsx --env-file=../../.env.development --watch src/modules/link/workers/metric.worker.ts",
+    "dev:cleaning": "tsx --env-file=../../.env.development --watch src/modules/link/workers/cleaning.worker.ts",
     "start": "node dist/index.js",
     "start:worker": "node dist/modules/link/workers/metric.worker.js",
+    "start:cleaning": "node dist/modules/link/workers/cleaning.worker.js",
     "build": "tsc && tsc-alias",
     "test": "vitest",
     "lint": "eslint ."

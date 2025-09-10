@@ -31,11 +31,13 @@ const RATE_LIMITER = {
 } as const
 
 const QUEUES = {
-  METRIC: 'metric-queue'
+  METRIC: 'metric-queue',
+  CLEANING: 'cleaning-queue'
 } as const
 
 const JOBS = {
-  LOG_METRIC: 'log-metric'
+  LOG_METRIC: 'log-metric',
+  CLEANING_PROCESS: 'cleaning-process'
 } as const
 
 type Code = (typeof ERROR_NAMES)[keyof typeof ERROR_NAMES]
