@@ -33,8 +33,8 @@ app.use('/api/docs', swaggerUI.serve, swaggerUI.setup(swaggerDocs))
 app.use('/api/auth', routerAuth)
 app.use('/api/link', routerLink)
 app.use('/api/metric', routerMetric)
-app.get('/api/ping', (_: Request, res: Response) => {
-  return res.send('API Running')
+app.get('/api/health', (_: Request, res: Response) => {
+  return res.send('ok')
 })
 app.use(errorMiddleware)
 
